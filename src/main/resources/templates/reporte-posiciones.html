@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporte de Consulta de Posiciones - BMV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #1D4167;
+            line-height: 1.4;
+            margin: 0;
+            padding: 15px;
+            font-size: 8px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #E4E8ED;
+            border-left: 4px solid #1D4167;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1D4167, #4A6785);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .title-section h1 {
+            color: #173452;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .title-section h2 {
+            color: #4A6785;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .report-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .info-label {
+            color: #4A6785;
+            font-size: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            color: #1D4167;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 4px 6px;
+            background-color: #F8F9FA;
+            border-radius: 3px;
+            border-left: 2px solid #1D4167;
+            display: block;
+        }
+
+        /* Main content */
+        .content-card {
+            background: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #E4E8ED;
+        }
+
+        .card-title {
+            color: #173452;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #D2D9E1;
+        }
+
+        /* Table styles */
+        .posiciones-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border: 1px solid #E4E8ED;
+            font-size: 7px;
+            table-layout: fixed;
+        }
+
+        .posiciones-table th {
+            background-color: #1D4167;
+            color: white;
+            padding: 3px 2px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            border: 1px solid #E4E8ED;
+            word-wrap: break-word;
+        }
+
+        .posiciones-table td {
+            padding: 2px 1px;
+            border: 1px solid #E4E8ED;
+            background: white;
+            text-align: center;
+            font-size: 6px;
+            word-wrap: break-word;
+        }
+
+        .posiciones-table tr:nth-child(even) td {
+            background-color: #F8F9FA;
+        }
+
+        .emisor-cell {
+            text-align: left;
+            font-weight: 600;
+            color: #173452;
+            font-size: 6px;
+            padding: 2px 1px;
+        }
+
+        .serie-cell {
+            text-align: left;
+            color: #4A6785;
+            font-size: 6px;
+            padding: 2px 1px;
+        }
+
+        .number-cell {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+            font-size: 6px;
+            padding: 2px 1px;
+        }
+
+        .total-cell {
+            background-color: #F1F4F6 !important;
+            font-weight: 600;
+            color: #173452;
+        }
+
+        /* Column grouping */
+        .group-header {
+            background-color: #345476 !important;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sub-header {
+            background-color: #4A6785 !important;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Anchos específicos para columnas */
+        .posiciones-table th:nth-child(1), .posiciones-table td:nth-child(1) { width: 60px; } /* Emisor */
+        .posiciones-table th:nth-child(2), .posiciones-table td:nth-child(2) { width: 25px; } /* Serie */
+        .posiciones-table th:nth-child(3), .posiciones-table td:nth-child(3) { width: 15px; } /* TV */
+        .posiciones-table th:nth-child(4), .posiciones-table td:nth-child(4) { width: 50px; } /* Saldo Inicial */
+        .posiciones-table th:nth-child(n+5), .posiciones-table td:nth-child(n+5) { width: 40px; } /* Resto de columnas */
+
+        /* Print styles */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 8mm;
+            }
+            
+            body {
+                background: white;
+                font-size: 6px;
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 0;
+            }
+            
+            .content-card {
+                border: 1px solid #ddd;
+                break-inside: avoid;
+                padding: 8px;
+            }
+            
+            .posiciones-table {
+                font-size: 5px;
+                width: 100%;
+                table-layout: fixed;
+            }
+            
+            .posiciones-table th,
+            .posiciones-table td {
+                padding: 1px 1px;
+                font-size: 5px;
+            }
+            
+            .header {
+                padding: 8px;
+            }
+            
+            .title-section h1 {
+                font-size: 12px;
+            }
+            
+            .title-section h2 {
+                font-size: 9px;
+            }
+        }
+        
+        /* Forzar orientación landscape */
+        @page {
+            size: A4 landscape;
+            margin: 8mm;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="logo-section">
+                    <div class="logo">BMV</div>
+                    <div class="title-section">
+                        <h1>BOLSA MEXICANA DE VALORES</h1>
+                        <h2>REPORTE DE CONSULTA DE POSICIONES</h2>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-info">
+                <div class="info-item">
+                    <span class="info-label">Casa de Bolsa</span>
+                    <span class="info-value" th:text="${casaBolsa}">ACTIN</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Razón Social</span>
+                    <span class="info-value" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha de Operación</span>
+                    <span class="info-value" th:text="${fechaOperacion}">1/9/2025</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Posiciones -->
+        <div class="content-card">
+            <h2 class="card-title">Detalle de Posiciones</h2>
+            <table class="posiciones-table">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="group-header">EMISIÓN</th>
+                        <th colspan="4" class="group-header">SALDO ANTERIOR</th>
+                        <th colspan="4" class="group-header">MONTO OPERADO</th>
+                        <th colspan="4" class="group-header">MONTO CANCELADO</th>
+                        <th colspan="4" class="group-header">MONTO MODIFICADO</th>
+                        <th colspan="4" class="group-header">POSICIÓN</th>
+                    </tr>
+                    <tr>
+                        <th class="sub-header">Emisora</th>
+                        <th class="sub-header">Serie</th>
+                        <th class="sub-header">TV</th>
+                        <th class="sub-header">Saldo Inicial</th>
+                        <th class="sub-header">VCP</th>
+                        <th class="sub-header">VCT</th>
+                        <th class="sub-header">CTO</th>
+                        <th class="sub-header">VCP</th>
+                        <th class="sub-header">VCT</th>
+                        <th class="sub-header">CTO</th>
+                        <th class="sub-header">TOTAL</th>
+                        <th class="sub-header">VCP</th>
+                        <th class="sub-header">VCT</th>
+                        <th class="sub-header">CTO</th>
+                        <th class="sub-header">TOTAL</th>
+                        <th class="sub-header">VCP</th>
+                        <th class="sub-header">VCT</th>
+                        <th class="sub-header">CTO</th>
+                        <th class="sub-header">TOTAL</th>
+                        <th class="sub-header">VCP</th>
+                        <th class="sub-header">VCT</th>
+                        <th class="sub-header">CTO</th>
+                        <th class="sub-header">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="posicion : ${posiciones}">
+                        <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                        <td class="serie-cell" th:text="${posicion.serie}">*</td>
+                        <td class="serie-cell" th:text="${posicion.tv}">1</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoInicial, 1, 0)}">33,388</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorVcp, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorVct, 1, 0)}">33,388</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorCto, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoVcp, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoVct, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoCto, 1, 0)}">0</td>
+                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoTotal, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoVcp, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoVct, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoCto, 1, 0)}">0</td>
+                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoTotal, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoVcp, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoVct, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoCto, 1, 0)}">0</td>
+                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoTotal, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionVcp, 1, 0)}">0</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionVct, 1, 0)}">33,388</td>
+                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionCto, 1, 0)}">0</td>
+                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.posicionTotal, 1, 0)}">33,388</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

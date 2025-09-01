@@ -1,6 +1,7 @@
 package com.bmv.emisnet.pdfgenerator.service;
 
 import com.bmv.emisnet.pdfgenerator.model.DatosReporte;
+import com.bmv.emisnet.pdfgenerator.model.Posicion;
 import com.bmv.emisnet.pdfgenerator.model.Venta;
 import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +159,45 @@ public class GeneradorReportesPDF {
     }
     
     /**
+     * Genera un PDF de reporte de consulta de posiciones con el diseño moderno
+     *
+     * @param rutaDestino ruta donde guardar el PDF generado
+     * @throws IOException si hay error de I/O
+     * @throws DocumentException si hay error en la generación del PDF
+     */
+    public void generarReportePosiciones(String rutaDestino) throws IOException, DocumentException {
+        log.info("Generando PDF de reporte de consulta de posiciones");
+        
+        try {
+            // 1. Preparar contexto con datos de muestra
+            Context context = new Context();
+            context.setVariable("casaBolsa", "ACTIN");
+            context.setVariable("razonSocial", "ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+            context.setVariable("fechaOperacion", "1/9/2025");
+            
+            // Datos de posiciones de muestra basados en la imagen
+            List<Posicion> posiciones = obtenerDatosPosiciones();
+            context.setVariable("posiciones", posiciones);
+            
+            // 2. Procesar plantilla HTML
+            log.info("Procesando plantilla de reporte de posiciones...");
+            String htmlContent = templateEngine.process("reporte-posiciones", context);
+            
+            log.info("HTML de reporte de posiciones generado exitosamente, longitud: {}", htmlContent.length());
+            
+            // 3. Convertir HTML a PDF con orientación landscape
+            log.info("Convirtiendo HTML a PDF en orientación landscape...");
+            convertirHtmlAPdfLandscape(htmlContent, rutaDestino);
+            
+            log.info("PDF de reporte de posiciones generado exitosamente en: {}", rutaDestino);
+            
+        } catch (Exception e) {
+            log.error("Error generando PDF de reporte de posiciones", e);
+            throw e;
+        }
+    }
+    
+    /**
      * Convierte contenido HTML a PDF usando Flying Saucer y OpenPDF
      */
     private void convertirHtmlAPdf(String htmlContent, String rutaDestino)
@@ -171,6 +212,25 @@ public class GeneradorReportesPDF {
             renderer.createPDF(outputStream);
             
             log.debug("PDF creado exitosamente");
+        }
+    }
+    
+    /**
+     * Convierte contenido HTML a PDF en orientación landscape usando Flying Saucer y OpenPDF
+     */
+    private void convertirHtmlAPdfLandscape(String htmlContent, String rutaDestino)
+           throws IOException, DocumentException {
+        
+        try (OutputStream outputStream = new FileOutputStream(rutaDestino)) {
+            ITextRenderer renderer = new ITextRenderer();
+            
+            // Configurar documento HTML con orientación landscape
+            // El CSS en la plantilla ya incluye @page { size: A4 landscape; }
+            renderer.setDocumentFromString(htmlContent);
+            renderer.layout();
+            renderer.createPDF(outputStream);
+            
+            log.debug("PDF landscape creado exitosamente");
         }
     }
     
@@ -214,5 +274,219 @@ public class GeneradorReportesPDF {
                 return mesData;
             })
             .collect(Collectors.toList());
+    }
+    
+    /**
+     * Obtiene datos de muestra para el reporte de posiciones
+     * Basado en la imagen proporcionada
+     */
+    private List<Posicion> obtenerDatosPosiciones() {
+        List<Posicion> posiciones = Arrays.asList(
+            crearPosicionWC(),
+            crearPosicionESGMEXISHIRS(),
+            crearPosicionFEMSAUBD(),
+            crearPosicionFIBRAM12(),
+            crearPosicionNAFTRAISHRS(),
+            crearPosicionSMARTR14(),
+            crearPosicionWALMEX()
+        );
+        
+        return posiciones;
+    }
+    
+    private Posicion crearPosicionWC() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("WC");
+        posicion.setSerie("1");
+        posicion.setTv("");
+        posicion.setSaldoInicial(33388.0);
+        posicion.setSaldoAnteriorVcp(0.0);
+        posicion.setSaldoAnteriorVct(33388.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(33388.0);
+        posicion.setPosicionVct(0.0);
+        posicion.setPosicionCto(33388.0);
+        posicion.setPosicionTotal(33388.0);
+        return posicion;
+    }
+    
+    private Posicion crearPosicionESGMEXISHIRS() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("ESGMEXISHIRS");
+        posicion.setSerie("1B");
+        posicion.setTv("");
+        posicion.setSaldoInicial(2300.0);
+        posicion.setSaldoAnteriorVcp(0.0);
+        posicion.setSaldoAnteriorVct(2300.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(2300.0);
+        posicion.setPosicionVct(0.0);
+        posicion.setPosicionCto(2300.0);
+        posicion.setPosicionTotal(2300.0);
+        return posicion;
+    }
+    
+    private Posicion crearPosicionFEMSAUBD() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("FEMSA UBD");
+        posicion.setSerie("1");
+        posicion.setTv("");
+        posicion.setSaldoInicial(2302.0);
+        posicion.setSaldoAnteriorVcp(0.0);
+        posicion.setSaldoAnteriorVct(2302.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(2302.0);
+        posicion.setPosicionVct(0.0);
+        posicion.setPosicionCto(2302.0);
+        posicion.setPosicionTotal(2302.0);
+        return posicion;
+    }
+    
+    private Posicion crearPosicionFIBRAM12() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("FIBRAM 12");
+        posicion.setSerie("CF");
+        posicion.setTv("");
+        posicion.setSaldoInicial(10500.0);
+        posicion.setSaldoAnteriorVcp(0.0);
+        posicion.setSaldoAnteriorVct(10500.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(10500.0);
+        posicion.setPosicionVct(0.0);
+        posicion.setPosicionCto(10500.0);
+        posicion.setPosicionTotal(10500.0);
+        return posicion;
+    }
+    
+    private Posicion crearPosicionNAFTRAISHRS() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("NAFTRA ISHRS");
+        posicion.setSerie("1B");
+        posicion.setTv("");
+        posicion.setSaldoInicial(533200.0);
+        posicion.setSaldoAnteriorVcp(0.0);
+        posicion.setSaldoAnteriorVct(533200.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(533200.0);
+        posicion.setPosicionVct(0.0);
+        posicion.setPosicionCto(533200.0);
+        posicion.setPosicionTotal(533200.0);
+        return posicion;
+    }
+    
+    private Posicion crearPosicionSMARTR14() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("SMARTR 14");
+        posicion.setSerie("1B");
+        posicion.setTv("");
+        posicion.setSaldoInicial(15900.0);
+        posicion.setSaldoAnteriorVcp(0.0);
+        posicion.setSaldoAnteriorVct(15900.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(15900.0);
+        posicion.setPosicionVct(0.0);
+        posicion.setPosicionCto(15900.0);
+        posicion.setPosicionTotal(15900.0);
+        return posicion;
+    }
+    
+    private Posicion crearPosicionWALMEX() {
+        Posicion posicion = new Posicion();
+        posicion.setEmisor("WALMEX");
+        posicion.setSerie("1");
+        posicion.setTv("");
+        posicion.setSaldoInicial(9955.0);
+        posicion.setSaldoAnteriorVcp(300.0);
+        posicion.setSaldoAnteriorVct(9655.0);
+        posicion.setSaldoAnteriorCto(0.0);
+        posicion.setMontoOperadoVcp(0.0);
+        posicion.setMontoOperadoVct(0.0);
+        posicion.setMontoOperadoCto(0.0);
+        posicion.setMontoOperadoTotal(0.0);
+        posicion.setMontoCanceladoVcp(0.0);
+        posicion.setMontoCanceladoVct(0.0);
+        posicion.setMontoCanceladoCto(0.0);
+        posicion.setMontoCanceladoTotal(0.0);
+        posicion.setMontoModificadoVcp(0.0);
+        posicion.setMontoModificadoVct(0.0);
+        posicion.setMontoModificadoCto(0.0);
+        posicion.setMontoModificadoTotal(0.0);
+        posicion.setPosicionVcp(300.0);
+        posicion.setPosicionVct(9666.0);
+        posicion.setPosicionCto(0.0);
+        posicion.setPosicionTotal(9966.0);
+        return posicion;
     }
 }
