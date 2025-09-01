@@ -46,8 +46,7 @@
         <lombok.version>1.18.36</lombok.version>
 
         <!-- Database -->
-        <postgresql.version>42.6.0</postgresql.version>
-        <hikaricp.version>5.1.0</hikaricp.version>
+
 
         <!-- PDF Libraries -->
         <itext.version>8.0.2</itext.version>
@@ -56,7 +55,7 @@
         <!-- Utilities -->
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <slf4j.version>2.0.9</slf4j.version>
-        <logback.version>1.4.11</logback.version>
+        <logback.version>1.5.8</logback.version>
 
         <!-- Build Plugins -->
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -135,28 +134,17 @@
             <artifactId>lambda</artifactId>
         </dependency>
 
-        <!-- Database -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>${hikaricp.version}</version>
-        </dependency>
+
 
         <!-- PDF Libraries -->
         <dependency>
             <groupId>com.itextpdf</groupId>
-            <artifactId>itext-core</artifactId>
+            <artifactId>kernel</artifactId>
             <version>${itext.version}</version>
-            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>
-            <artifactId>html2pdf</artifactId>
+            <artifactId>layout</artifactId>
             <version>${itext.version}</version>
         </dependency>
         <dependency>
@@ -178,24 +166,9 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
+        <!-- Logging is handled by Spring Boot starter -->
 
-        <!-- Testing -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
