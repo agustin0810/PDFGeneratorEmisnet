@@ -120,6 +120,35 @@ public class PdfController {
     }
     
     /**
+     * Genera un PDF de aviso de extemporaneidad con el nuevo diseño
+     * 
+     * @return PDF del aviso de extemporaneidad como recurso descargable
+     */
+    @GetMapping("/aviso-extemporaneidad")
+    public ResponseEntity<Resource> generarAvisoExtemporaneidad() {
+        log.info("Generando PDF de aviso de extemporaneidad");
+        
+        try {
+            String nombreArchivo = "aviso-extemporaneidad-" + LocalDate.now() + ".pdf";
+            String rutaTemporal = System.getProperty("java.io.tmpdir") + "/" + nombreArchivo;
+            
+            // Generar PDF con el nuevo template
+            generadorReportesPDF.generarAvisoExtemporaneidad(rutaTemporal);
+            
+            Resource resource = new FileSystemResource(rutaTemporal);
+            
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nombreArchivo)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+                
+        } catch (Exception e) {
+            log.error("Error generando PDF de aviso de extemporaneidad", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    /**
      * Health check endpoint
      * 
      * @return Simple health status

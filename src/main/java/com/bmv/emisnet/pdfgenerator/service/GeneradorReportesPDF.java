@@ -157,6 +157,44 @@ public class GeneradorReportesPDF {
     }
     
     /**
+     * Genera un PDF de aviso de extemporaneidad con el nuevo diseño
+     *
+     * @param rutaDestino ruta donde guardar el PDF generado
+     * @throws IOException si hay error de I/O
+     * @throws DocumentException si hay error en la generación del PDF
+     */
+    public void generarAvisoExtemporaneidad(String rutaDestino) throws IOException, DocumentException {
+        log.info("Generando PDF de aviso de extemporaneidad");
+        
+        try {
+            // 1. Preparar contexto con datos de muestra
+            Context context = new Context();
+            context.setVariable("fecha", "01/09/2025");
+            context.setVariable("claveCotizacion", "ACTIN");
+            context.setVariable("razonSocial", "ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+            context.setVariable("tipoInformacion", "Constancia Trimestral de Operaciones");
+            context.setVariable("causasIncumplimiento", "Retraso en la consolidación de información operativa. Se presentará el día 15/09/2025.");
+            context.setVariable("observaciones", "Se ha implementado un nuevo sistema de reportes que ha requerido tiempo adicional para su validación.");
+            
+            // 2. Procesar plantilla HTML
+            log.info("Procesando plantilla de aviso de extemporaneidad...");
+            String htmlContent = templateEngine.process("aviso-extemporaneidad", context);
+            
+            log.info("HTML de aviso de extemporaneidad generado exitosamente, longitud: {}", htmlContent.length());
+            
+            // 3. Convertir HTML a PDF
+            log.info("Convirtiendo HTML a PDF...");
+            convertirHtmlAPdf(htmlContent, rutaDestino);
+            
+            log.info("PDF de aviso de extemporaneidad generado exitosamente en: {}", rutaDestino);
+            
+        } catch (Exception e) {
+            log.error("Error generando PDF de aviso de extemporaneidad", e);
+            throw e;
+        }
+    }
+    
+    /**
      * Convierte contenido HTML a PDF usando Flying Saucer y OpenPDF
      */
     private void convertirHtmlAPdf(String htmlContent, String rutaDestino)
