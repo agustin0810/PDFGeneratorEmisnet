@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aviso de Extemporaneidad - Sistema Electrónico</title>
+    
+    <!-- Importar estilos comunes -->
+    <style th:replace="~{fragments/header :: common-styles}"></style>
+    
     <style>
         /* Colores directos para compatibilidad con PDF */
         .neutral-03 { background-color: #F8F9FA; }
@@ -30,12 +34,6 @@
         .texto-claro { color: #778DA4; }
         .borde-claro { border-color: #E4E8ED; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
             background-color: white;
@@ -50,39 +48,30 @@
             margin: 0 auto;
         }
 
-        /* Header */
+        /* Header específico para aviso de extemporaneidad */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 40px;
+            background: white;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #E4E8ED;
+            text-align: center;
         }
 
-        .logo-section {
-            text-align: right;
-        }
-
-        .logo {
-            width: 80px;
-            height: 60px;
-            background: linear-gradient(135deg, #1D4167 0%, #4A6785 100%);
-            border-radius: 8px;
+        .logo-container {
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
-            margin-left: auto;
+            align-items: center;
         }
 
-        .logo-text {
-            font-size: 18px;
-            font-weight: bold;
-            color: #1D4167;
-            text-align: right;
+        .bmv-logo {
+            max-width: 120px;
+            height: auto;
+            max-height: 60px;
         }
 
         .title-section {
-            flex: 1;
+            margin-top: 15px;
         }
 
         .document-title {
@@ -196,18 +185,13 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="title-section">
-                <h1 class="document-title">Aviso de Extemporaneidad en la entrega de Información</h1>
-                <div class="document-date">FECHA: <span th:text="${fecha}">01/09/2025</span></div>
-            </div>
-            <div class="logo-section">
-                <div class="logo">
-                    <span style="color: white; font-size: 24px; font-weight: bold;">M</span>
-                </div>
-                <div class="logo-text">Grupo BMV</div>
-            </div>
+        <!-- Header reutilizable -->
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <!-- Título del documento -->
+        <div class="title-section">
+            <h1 class="document-title">Aviso de Extemporaneidad</h1>
+            <div class="document-date" th:text="${fechaGeneracion}">Fecha de generación</div>
         </div>
 
         <!-- Main content -->

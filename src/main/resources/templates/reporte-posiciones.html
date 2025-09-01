@@ -4,129 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reporte de Consulta de Posiciones - BMV</title>
+    
+    <!-- Importar estilos comunes -->
+    <style th:replace="~{fragments/header :: common-styles}"></style>
+    
+    <!-- Importar estilos para landscape -->
+    <style th:replace="~{fragments/header :: landscape-styles}"></style>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F8F9FA;
-            color: #1D4167;
-            line-height: 1.4;
-            margin: 0;
-            padding: 15px;
-            font-size: 8px;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid #E4E8ED;
-            border-left: 4px solid #1D4167;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #1D4167, #4A6785);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .title-section h1 {
-            color: #173452;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .title-section h2 {
-            color: #4A6785;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .report-info {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .info-item {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .info-label {
-            color: #4A6785;
-            font-size: 8px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .info-value {
-            color: #1D4167;
-            font-size: 9px;
-            font-weight: 600;
-            padding: 4px 6px;
-            background-color: #F8F9FA;
-            border-radius: 3px;
-            border-left: 2px solid #1D4167;
-            display: block;
-        }
-
-        /* Main content */
-        .content-card {
-            background: white;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid #E4E8ED;
-        }
-
-        .card-title {
-            color: #173452;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 2px solid #D2D9E1;
-        }
-
         /* Table styles */
         .posiciones-table {
             width: 100%;
@@ -269,30 +154,20 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-top">
-                <div class="logo-section">
-                    <div class="logo">BMV</div>
-                    <div class="title-section">
-                        <h1>BOLSA MEXICANA DE VALORES</h1>
-                        <h2>REPORTE DE CONSULTA DE POSICIONES</h2>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="report-info">
+        <!-- Header reutilizable -->
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <!-- Título del reporte -->
+        <div class="content-card">
+            <h1 class="card-title">Reporte de Consulta de Posiciones</h1>
+            <div class="info-grid">
                 <div class="info-item">
-                    <span class="info-label">Casa de Bolsa</span>
-                    <span class="info-value" th:text="${casaBolsa}">ACTIN</span>
+                    <span class="info-label">Fecha de consulta</span>
+                    <span class="info-value" th:text="${fechaConsulta}">2025-01-15</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">Razón Social</span>
+                    <span class="info-label">Casa de bolsa</span>
                     <span class="info-value" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Fecha de Operación</span>
-                    <span class="info-value" th:text="${fechaOperacion}">1/9/2025</span>
                 </div>
             </div>
         </div>

@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Confirmación de Envío - Sistema Electrónico</title>
+    
+    <!-- Importar estilos comunes -->
+    <style th:replace="~{fragments/header :: common-styles}"></style>
+    
     <style>
         /* Colores directos para compatibilidad con PDF */
         .neutral-03 { background-color: #F8F9FA; }
@@ -30,12 +34,6 @@
         .texto-claro { color: #778DA4; }
         .borde-claro { border-color: #E4E8ED; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
             background-color: #F8F9FA;
@@ -51,18 +49,31 @@
             padding: 20px;
         }
 
-        /* Header */
+        /* Header específico para confirmación */
         .header {
             background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #E4E8ED;
-            border-left: 4px solid #1D4167;
+            text-align: center;
         }
 
-        .header-top {
-            margin-bottom: 15px;
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bmv-logo {
+            max-width: 120px;
+            height: auto;
+            max-height: 60px;
+        }
+
+        .header-info {
+            margin-top: 15px;
+            text-align: left;
         }
 
         .timestamp {
@@ -238,13 +249,16 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
+        <!-- Header reutilizable -->
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <!-- Información del header -->
+        <div class="header-info">
             <div class="header-top">
-                <div class="timestamp" th:text="${fechaHora}">1/9/25, 9:11 a.m.</div>
-                <div class="system-title">Sistema Electrónico de Comunicación con emisoras de Valores</div>
+                <div class="timestamp" th:text="${fechaHoraEnvio}">2025-01-15 10:30:00</div>
+                <div class="system-title">Sistema Electrónico de Información</div>
             </div>
-            <a href="#" class="breadcrumb">CONFIRMACIÓN DE ENVÍO</a>
+            <a href="#" class="breadcrumb">Confirmación de Envío</a>
         </div>
 
         <!-- Acuse de recibo -->

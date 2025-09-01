@@ -211,6 +211,7 @@ public class GeneradorReportesPDF {
             Context context = new Context();
             context.setVariable("casaBolsa", "ACTIN");
             context.setVariable("razonSocial", "ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+            context.setVariable("fechaConsulta", "2025-01-15");
             context.setVariable("fechaOperacion", "1/9/2025");
             
             // Datos de posiciones de muestra basados en la imagen
