@@ -111,6 +111,52 @@ public class GeneradorReportesPDF {
     }
     
     /**
+     * Genera un PDF de confirmación de envío con el nuevo diseño moderno
+     *
+     * @param rutaDestino ruta donde guardar el PDF generado
+     * @throws IOException si hay error de I/O
+     * @throws DocumentException si hay error en la generación del PDF
+     */
+    public void generarConfirmacionEnvio(String rutaDestino) throws IOException, DocumentException {
+        log.info("Generando PDF de confirmación de envío");
+        
+        try {
+            // 1. Preparar contexto con datos de muestra
+            Context context = new Context();
+            context.setVariable("fechaHora", "3/9/25, 9:11 a.m.");
+            context.setVariable("clave", "ACTIN");
+            context.setVariable("razonSocial", "ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+            context.setVariable("folioRecepcion", "1452904");
+            context.setVariable("responsable", "ACTINVER EQUITY Peyrani");
+            context.setVariable("fechaHoraEnvio", "2025-09-01 09:11:32.227");
+            context.setVariable("periodo", "Ejercicio 2025-02");
+            
+            // Datos de archivos recibidos
+            Map<String, String> archivo1 = new HashMap<>();
+            archivo1.put("nombre", "constrim.pdf");
+            archivo1.put("descripcion", "Constancia Trimestral");
+            
+            context.setVariable("archivos", List.of(archivo1));
+            
+            // 2. Procesar plantilla HTML
+            log.info("Procesando plantilla de confirmación de envío...");
+            String htmlContent = templateEngine.process("confirmacion-envio", context);
+            
+            log.info("HTML de confirmación generado exitosamente, longitud: {}", htmlContent.length());
+            
+            // 3. Convertir HTML a PDF
+            log.info("Convirtiendo HTML a PDF...");
+            convertirHtmlAPdf(htmlContent, rutaDestino);
+            
+            log.info("PDF de confirmación generado exitosamente en: {}", rutaDestino);
+            
+        } catch (Exception e) {
+            log.error("Error generando PDF de confirmación", e);
+            throw e;
+        }
+    }
+    
+    /**
      * Convierte contenido HTML a PDF usando Flying Saucer y OpenPDF
      */
     private void convertirHtmlAPdf(String htmlContent, String rutaDestino)

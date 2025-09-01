@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Confirmación de Envío - Sistema Electrónico</title>
+    <style>
+        /* Colores directos para compatibilidad con PDF */
+        .neutral-03 { background-color: #F8F9FA; }
+        .neutral-06 { background-color: #F1F4F6; }
+        .neutral-09 { background-color: #EBEEF1; }
+        .neutral-12 { background-color: #E4E8ED; }
+        .neutral-20 { background-color: #D2D9E1; }
+        .neutral-30 { background-color: #BBC6D1; }
+        .neutral-40 { background-color: #A5B3C2; }
+        .neutral-50 { background-color: #8EA0B3; }
+        .neutral-60 { background-color: #778DA4; }
+        .neutral-70 { background-color: #617A95; }
+        .neutral-80 { background-color: #4A6785; }
+        .neutral-90 { background-color: #345476; }
+        .neutral-100 { background-color: #1D4167; color: white; }
+        .neutral-110 { background-color: #1A3A5D; color: white; }
+        .neutral-120 { color: #173452; }
+        .neutral-130 { color: #142E48; }
+        .neutral-140 { color: #11273E; }
+        .neutral-150 { color: #0F2034; }
+        
+        .texto-principal { color: #1D4167; }
+        .texto-secundario { color: #4A6785; }
+        .texto-claro { color: #778DA4; }
+        .borde-claro { border-color: #E4E8ED; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #1D4167;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #E4E8ED;
+            border-left: 4px solid #1D4167;
+        }
+
+        .header-top {
+            margin-bottom: 15px;
+        }
+
+        .timestamp {
+            color: #4A6785;
+            font-size: 14px;
+            font-weight: 500;
+            float: left;
+        }
+
+        .system-title {
+            color: #173452;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: right;
+            float: right;
+            max-width: 300px;
+        }
+
+        .breadcrumb {
+            color: #1D4167;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            clear: both;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .breadcrumb::before {
+            content: "> ";
+            color: #4A6785;
+            font-weight: bold;
+        }
+
+        /* Main content cards */
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #E4E8ED;
+        }
+
+        .card-title {
+            color: #173452;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #D2D9E1;
+        }
+
+
+
+        /* Info grid */
+        .info-grid {
+            width: 100%;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            clear: both;
+        }
+
+        .info-label {
+            color: #4A6785;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #1D4167;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 12px;
+            background-color: #F8F9FA;
+            border-radius: 4px;
+            border-left: 3px solid #1D4167;
+            display: block;
+        }
+
+        /* File table */
+        .file-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border: 1px solid #E4E8ED;
+        }
+
+        .file-table th {
+            background-color: #1D4167;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .file-table td {
+            padding: 12px;
+            border-bottom: 1px solid #E4E8ED;
+            background: white;
+        }
+
+        .file-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #173452;
+        }
+
+        .file-description {
+            color: #4A6785;
+            font-style: italic;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: 1px solid #E4E8ED;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+            min-width: 120px;
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #4A6785;
+            border-color: #E4E8ED;
+        }
+
+        .btn-primary {
+            background-color: #1D4167;
+            color: white;
+            border-color: #1D4167;
+        }
+
+
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .content-card {
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+            
+            .action-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="timestamp" th:text="${fechaHora}">1/9/25, 9:11 a.m.</div>
+                <div class="system-title">Sistema Electrónico de Comunicación con emisoras de Valores</div>
+            </div>
+            <a href="#" class="breadcrumb">CONFIRMACIÓN DE ENVÍO</a>
+        </div>
+
+        <!-- Acuse de recibo -->
+        <div class="content-card">
+            <h2 class="card-title">Acuse de recibo de información</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Clave</span>
+                    <span class="info-value" th:text="${clave}">ACTIN</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Razón social</span>
+                    <span class="info-value" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Folio de recepción</span>
+                    <span class="info-value" th:text="${folioRecepcion}">1452904</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Responsable</span>
+                    <span class="info-value" th:text="${responsable}">ACTINVER EQUITY Peyrani</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha y hora del envío</span>
+                    <span class="info-value" th:text="${fechaHoraEnvio}">2025-09-01 09:11:32.227</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Periodo</span>
+                    <span class="info-value" th:text="${periodo}">Ejercicio 2025-02</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Archivos recibidos -->
+        <div class="content-card">
+            <h2 class="card-title">Archivo(s) recibido(s)</h2>
+            <table class="file-table">
+                <thead>
+                    <tr>
+                        <th>Nombre del archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="archivo : ${archivos}">
+                        <td>
+                            <span class="file-name" th:text="${archivo.nombre}">constrim.pdf</span>
+                        </td>
+                        <td>
+                            <span class="file-description" th:text="${archivo.descripcion}">Constancia Trimestral</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="action-buttons">
+            <a href="#" class="btn btn-secondary">Regresar</a>
+            <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        </div>
+    </div>
+</body>
+</html>

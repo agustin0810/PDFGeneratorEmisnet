@@ -91,6 +91,35 @@ public class PdfController {
     }
     
     /**
+     * Genera un PDF de confirmación de envío con el nuevo diseño moderno
+     * 
+     * @return PDF de confirmación de envío como recurso descargable
+     */
+    @GetMapping("/confirmacion-envio")
+    public ResponseEntity<Resource> generarConfirmacionEnvio() {
+        log.info("Generando PDF de confirmación de envío");
+        
+        try {
+            String nombreArchivo = "confirmacion-envio-" + LocalDate.now() + ".pdf";
+            String rutaTemporal = System.getProperty("java.io.tmpdir") + "/" + nombreArchivo;
+            
+            // Generar PDF con el nuevo template
+            generadorReportesPDF.generarConfirmacionEnvio(rutaTemporal);
+            
+            Resource resource = new FileSystemResource(rutaTemporal);
+            
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nombreArchivo)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+                
+        } catch (Exception e) {
+            log.error("Error generando PDF de confirmación de envío", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    /**
      * Health check endpoint
      * 
      * @return Simple health status

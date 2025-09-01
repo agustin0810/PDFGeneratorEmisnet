@@ -4,9 +4,6 @@ spring:
 
 server:
   port: 8080
-  servlet:
-    context-path: /pdf-generator
-
 logging:
   level:
     com.bmv.emisnet.pdfgenerator: INFO
