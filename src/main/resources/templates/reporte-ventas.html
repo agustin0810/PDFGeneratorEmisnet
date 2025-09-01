@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+       body { font-family: Arial, sans-serif; margin: 20px; }
+       .header { text-align: center; margin-bottom: 30px; }
+       .company-info { margin-bottom: 20px; }
+       .summary { background-color: #f5f5f5; padding: 15px; margin: 20px 0; }
+       table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+       th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+       th { background-color: #4CAF50; color: white; }
+       .total { font-weight: bold; background-color: #e8f5e8; }
+       @page { margin: 2cm; }
+   </style>
+</head>
+<body>
+    <div class="header">
+        <h1 th:text="${titulo}">Reporte de Ventas</h1>
+        <p th:text="'Período: ' + ${periodo}">Período: Enero 2024</p>
+        <p th:text="'Generado: ' + ${fechaGeneracion}">Generado: 2024-01-15</p>
+    </div>
+
+    <div class="company-info">
+        <h3>Información de la Empresa</h3>
+        <p th:text="${empresa.nombre}">Nombre Empresa</p>
+        <p th:text="${empresa.direccion}">Dirección</p>
+        <p th:text="'Tel: ' + ${empresa.telefono}">Teléfono</p>
+    </div>
+
+    <div class="summary">
+        <h3>Resumen Ejecutivo</h3>
+        <p><strong>Total Ventas:</strong> <span th:text="${resumen.totalVentas}">$0</span></p>
+        <p><strong>Número de Transacciones:</strong> <span th:text="${resumen.numeroTransacciones}">0</span></p>
+        <p><strong>Venta Promedio:</strong> <span th:text="${resumen.ventaPromedio}">$0</span></p>
+    </div>
+
+    <h3>Detalle de Ventas</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unit.</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="venta : ${ventas}">
+                <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy')}">01/01/2024</td>
+                <td th:text="${venta.cliente}">Cliente</td>
+                <td th:text="${venta.producto}">Producto</td>
+                <td th:text="${venta.cantidad}">1</td>
+                <td th:text="${#numbers.formatCurrency(venta.precioUnitario)}">$0</td>
+                <td th:text="${#numbers.formatCurrency(venta.total)}"
+                   th:class="${venta.total > 1000} ? 'total' : ''">$0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Gráfico simple con CSS (opcional) -->
+    <div th:if="${incluirGrafico}">
+        <h3>Ventas por Mes</h3>
+        <div th:each="mes : ${ventasPorMes}" class="barra">
+            <span th:text="${mes.nombre}">Mes</span>
+            <div style="background: #4CAF50; height: 20px;"
+                th:style="'width: ' + ${mes.porcentaje} + '%; background: #4CAF50; height: 20px;'"></div>
+            <span th:text="${#numbers.formatCurrency(mes.total)}">$0</span>
+        </div>
+    </div>
+</body>
+</html>

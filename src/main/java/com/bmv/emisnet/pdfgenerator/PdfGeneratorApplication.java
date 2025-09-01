@@ -14,11 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  * @author 2H Software
  * @organization Bolsa Mexicana de Valores
  */
-@SpringBootApplication(exclude = {
-    org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration.class,
-    org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class,
-    org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration.class
-})
+@SpringBootApplication
 @ConfigurationPropertiesScan
 public class PdfGeneratorApplication {
 
