@@ -149,6 +149,35 @@ public class PdfController {
     }
     
     /**
+     * Genera un PDF de reporte de consulta de posiciones con el diseño moderno
+     * 
+     * @return PDF de reporte de posiciones como recurso descargable
+     */
+    @GetMapping("/reporte-posiciones")
+    public ResponseEntity<Resource> generarReportePosiciones() {
+        log.info("Generando PDF de reporte de consulta de posiciones");
+        
+        try {
+            String nombreArchivo = "reporte-posiciones-" + LocalDate.now() + ".pdf";
+            String rutaTemporal = System.getProperty("java.io.tmpdir") + "/" + nombreArchivo;
+            
+            // Generar PDF con el nuevo template
+            generadorReportesPDF.generarReportePosiciones(rutaTemporal);
+            
+            Resource resource = new FileSystemResource(rutaTemporal);
+            
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nombreArchivo)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+                
+        } catch (Exception e) {
+            log.error("Error generando PDF de reporte de posiciones", e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    /**
      * Health check endpoint
      * 
      * @return Simple health status
