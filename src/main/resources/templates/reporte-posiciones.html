@@ -18,7 +18,7 @@
             border-collapse: collapse;
             margin-top: 10px;
             border: 1px solid #E4E8ED;
-            font-size: 8px;
+            font-size: 16px;
             table-layout: fixed;
             min-width: auto;
             max-width: none;
@@ -30,7 +30,7 @@
             padding: 1px 0px;
             text-align: center;
             font-weight: 600;
-            font-size: 7px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0px;
             border: 1px solid #E4E8ED;
@@ -42,7 +42,7 @@
             border: 1px solid #E4E8ED;
             background: white;
             text-align: center;
-            font-size: 8px;
+            font-size: 16px;
             word-wrap: break-word;
         }
 
@@ -54,14 +54,14 @@
             text-align: left;
             font-weight: 600;
             color: #173452;
-            font-size: 8px;
+            font-size: 16px;
             padding: 0px 0px;
         }
 
         .serie-cell {
             text-align: left;
             color: #4A6785;
-            font-size: 8px;
+            font-size: 16px;
             padding: 0px 0px;
         }
 
@@ -69,7 +69,7 @@
             text-align: right;
             font-family: 'Courier New', monospace;
             font-weight: 500;
-            font-size: 8px;
+            font-size: 16px;
             padding: 0px 0px;
         }
 
@@ -95,9 +95,11 @@
         /* Tables container */
         .tables-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
             margin-top: 15px;
+            width: 100%;
+            overflow: hidden;
         }
 
         .table-section {
@@ -106,7 +108,7 @@
 
         .table-section h3 {
             color: #173452;
-            font-size: 10px;
+            font-size: 20px;
             font-weight: 600;
             margin-bottom: 6px;
             text-align: center;
@@ -119,52 +121,52 @@
         }
         
         .posiciones-table th:nth-child(1), .posiciones-table td:nth-child(1) { 
-            width: 22px !important; 
-            max-width: 22px !important;
+            width: 11px !important; 
+            max-width: 11px !important;
         } /* Emisor */
         .posiciones-table th:nth-child(2), .posiciones-table td:nth-child(2) { 
-            width: 9px !important; 
-            max-width: 9px !important;
+            width: 4px !important; 
+            max-width: 4px !important;
         } /* Serie */
         .posiciones-table th:nth-child(3), .posiciones-table td:nth-child(3) { 
-            width: 6px !important; 
-            max-width: 6px !important;
+            width: 3px !important; 
+            max-width: 3px !important;
         } /* TV */
         .posiciones-table th:nth-child(4), .posiciones-table td:nth-child(4) { 
-            width: 17px !important; 
-            max-width: 17px !important;
+            width: 8px !important; 
+            max-width: 8px !important;
         } /* Saldo Inicial */
         .posiciones-table th:nth-child(5), .posiciones-table td:nth-child(5) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* VCP */
         .posiciones-table th:nth-child(6), .posiciones-table td:nth-child(6) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* VCT */
         .posiciones-table th:nth-child(7), .posiciones-table td:nth-child(7) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* CTO */
         .posiciones-table th:nth-child(8), .posiciones-table td:nth-child(8) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* TOTAL */
         .posiciones-table th:nth-child(9), .posiciones-table td:nth-child(9) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* VCP */
         .posiciones-table th:nth-child(10), .posiciones-table td:nth-child(10) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* VCT */
         .posiciones-table th:nth-child(11), .posiciones-table td:nth-child(11) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* CTO */
         .posiciones-table th:nth-child(12), .posiciones-table td:nth-child(12) { 
-            width: 15px !important; 
-            max-width: 15px !important;
+            width: 7px !important; 
+            max-width: 7px !important;
         } /* TOTAL */
         
         /* Forzar anchos mínimos para todas las columnas */
@@ -177,7 +179,24 @@
             white-space: nowrap;
         }
 
+        /* Info grid */
+        .info-grid {
+            width: 100%;
+            font-size: 28px;
+        }
 
+        /* Container adjustments */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .content-card {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
 
         /* Print styles */
         @media print {
@@ -188,25 +207,33 @@
             
             body {
                 background: white;
-                font-size: 6px;
+                font-size: 12px;
                 padding: 5px;
             }
             
             .container {
                 padding: 0;
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
             }
             
             .content-card {
                 border: 1px solid #ddd;
                 break-inside: avoid;
                 padding: 8px;
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
             }
             
             .tables-container {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 4px;
                 margin-top: 10px;
+                width: 100%;
+                overflow: hidden;
             }
             
             .table-section {
@@ -214,14 +241,14 @@
             }
             
             .table-section h3 {
-                font-size: 7px;
+                font-size: 14px;
                 margin-bottom: 2px;
             }
             
 
             
             .posiciones-table {
-                font-size: 7px;
+                font-size: 14px;
                 width: 100%;
                 table-layout: fixed;
             }
@@ -229,7 +256,7 @@
             .posiciones-table th,
             .posiciones-table td {
                 padding: 1px 1px;
-                font-size: 7px;
+                font-size: 14px;
             }
             
             .header {
@@ -237,11 +264,11 @@
             }
             
             .title-section h1 {
-                font-size: 12px;
+                font-size: 24px;
             }
             
             .title-section h2 {
-                font-size: 9px;
+                font-size: 18px;
             }
         }
         
