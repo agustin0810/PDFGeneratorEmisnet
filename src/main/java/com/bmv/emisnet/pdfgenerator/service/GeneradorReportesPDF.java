@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -171,7 +172,7 @@ public class GeneradorReportesPDF {
         try {
             // 1. Preparar contexto con datos de muestra
             Context context = new Context();
-            context.setVariable("fecha", "01/09/2025");
+            context.setVariable("fechaGeneracion", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             context.setVariable("claveCotizacion", "ACTIN");
             context.setVariable("razonSocial", "ACTINVER CASA DE BOLSA, S.A. DE C.V.");
             context.setVariable("tipoInformacion", "Constancia Trimestral de Operaciones");

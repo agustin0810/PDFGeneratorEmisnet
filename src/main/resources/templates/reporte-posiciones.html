@@ -18,29 +18,31 @@
             border-collapse: collapse;
             margin-top: 10px;
             border: 1px solid #E4E8ED;
-            font-size: 7px;
+            font-size: 8px;
             table-layout: fixed;
+            min-width: auto;
+            max-width: none;
         }
 
         .posiciones-table th {
             background-color: #1D4167;
             color: white;
-            padding: 3px 2px;
+            padding: 1px 0px;
             text-align: center;
             font-weight: 600;
-            font-size: 6px;
+            font-size: 7px;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
+            letter-spacing: 0px;
             border: 1px solid #E4E8ED;
             word-wrap: break-word;
         }
 
         .posiciones-table td {
-            padding: 2px 1px;
+            padding: 0px 0px;
             border: 1px solid #E4E8ED;
             background: white;
             text-align: center;
-            font-size: 6px;
+            font-size: 8px;
             word-wrap: break-word;
         }
 
@@ -52,23 +54,23 @@
             text-align: left;
             font-weight: 600;
             color: #173452;
-            font-size: 6px;
-            padding: 2px 1px;
+            font-size: 8px;
+            padding: 0px 0px;
         }
 
         .serie-cell {
             text-align: left;
             color: #4A6785;
-            font-size: 6px;
-            padding: 2px 1px;
+            font-size: 8px;
+            padding: 0px 0px;
         }
 
         .number-cell {
             text-align: right;
             font-family: 'Courier New', monospace;
             font-weight: 500;
-            font-size: 6px;
-            padding: 2px 1px;
+            font-size: 8px;
+            padding: 0px 0px;
         }
 
         .total-cell {
@@ -90,12 +92,92 @@
             font-weight: 500;
         }
 
+        /* Tables container */
+        .tables-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .table-section {
+            margin-bottom: 15px;
+        }
+
+        .table-section h3 {
+            color: #173452;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
         /* Anchos específicos para columnas */
-        .posiciones-table th:nth-child(1), .posiciones-table td:nth-child(1) { width: 60px; } /* Emisor */
-        .posiciones-table th:nth-child(2), .posiciones-table td:nth-child(2) { width: 25px; } /* Serie */
-        .posiciones-table th:nth-child(3), .posiciones-table td:nth-child(3) { width: 15px; } /* TV */
-        .posiciones-table th:nth-child(4), .posiciones-table td:nth-child(4) { width: 50px; } /* Saldo Inicial */
-        .posiciones-table th:nth-child(n+5), .posiciones-table td:nth-child(n+5) { width: 40px; } /* Resto de columnas */
+        .posiciones-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        
+        .posiciones-table th:nth-child(1), .posiciones-table td:nth-child(1) { 
+            width: 22px !important; 
+            max-width: 22px !important;
+        } /* Emisor */
+        .posiciones-table th:nth-child(2), .posiciones-table td:nth-child(2) { 
+            width: 9px !important; 
+            max-width: 9px !important;
+        } /* Serie */
+        .posiciones-table th:nth-child(3), .posiciones-table td:nth-child(3) { 
+            width: 6px !important; 
+            max-width: 6px !important;
+        } /* TV */
+        .posiciones-table th:nth-child(4), .posiciones-table td:nth-child(4) { 
+            width: 17px !important; 
+            max-width: 17px !important;
+        } /* Saldo Inicial */
+        .posiciones-table th:nth-child(5), .posiciones-table td:nth-child(5) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* VCP */
+        .posiciones-table th:nth-child(6), .posiciones-table td:nth-child(6) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* VCT */
+        .posiciones-table th:nth-child(7), .posiciones-table td:nth-child(7) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* CTO */
+        .posiciones-table th:nth-child(8), .posiciones-table td:nth-child(8) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* TOTAL */
+        .posiciones-table th:nth-child(9), .posiciones-table td:nth-child(9) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* VCP */
+        .posiciones-table th:nth-child(10), .posiciones-table td:nth-child(10) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* VCT */
+        .posiciones-table th:nth-child(11), .posiciones-table td:nth-child(11) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* CTO */
+        .posiciones-table th:nth-child(12), .posiciones-table td:nth-child(12) { 
+            width: 15px !important; 
+            max-width: 15px !important;
+        } /* TOTAL */
+        
+        /* Forzar anchos mínimos para todas las columnas */
+        .posiciones-table th,
+        .posiciones-table td {
+            min-width: 0 !important;
+            max-width: none !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+
 
         /* Print styles */
         @media print {
@@ -120,8 +202,26 @@
                 padding: 8px;
             }
             
+            .tables-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                margin-top: 10px;
+            }
+            
+            .table-section {
+                margin-bottom: 10px;
+            }
+            
+            .table-section h3 {
+                font-size: 7px;
+                margin-bottom: 2px;
+            }
+            
+
+            
             .posiciones-table {
-                font-size: 5px;
+                font-size: 7px;
                 width: 100%;
                 table-layout: fixed;
             }
@@ -129,7 +229,7 @@
             .posiciones-table th,
             .posiciones-table td {
                 padding: 1px 1px;
-                font-size: 5px;
+                font-size: 7px;
             }
             
             .header {
@@ -175,70 +275,176 @@
         <!-- Tabla de Posiciones -->
         <div class="content-card">
             <h2 class="card-title">Detalle de Posiciones</h2>
-            <table class="posiciones-table">
-                <thead>
-                    <tr>
-                        <th colspan="3" class="group-header">EMISIÓN</th>
-                        <th colspan="4" class="group-header">SALDO ANTERIOR</th>
-                        <th colspan="4" class="group-header">MONTO OPERADO</th>
-                        <th colspan="4" class="group-header">MONTO CANCELADO</th>
-                        <th colspan="4" class="group-header">MONTO MODIFICADO</th>
-                        <th colspan="4" class="group-header">POSICIÓN</th>
-                    </tr>
-                    <tr>
-                        <th class="sub-header">Emisora</th>
-                        <th class="sub-header">Serie</th>
-                        <th class="sub-header">TV</th>
-                        <th class="sub-header">Saldo Inicial</th>
-                        <th class="sub-header">VCP</th>
-                        <th class="sub-header">VCT</th>
-                        <th class="sub-header">CTO</th>
-                        <th class="sub-header">VCP</th>
-                        <th class="sub-header">VCT</th>
-                        <th class="sub-header">CTO</th>
-                        <th class="sub-header">TOTAL</th>
-                        <th class="sub-header">VCP</th>
-                        <th class="sub-header">VCT</th>
-                        <th class="sub-header">CTO</th>
-                        <th class="sub-header">TOTAL</th>
-                        <th class="sub-header">VCP</th>
-                        <th class="sub-header">VCT</th>
-                        <th class="sub-header">CTO</th>
-                        <th class="sub-header">TOTAL</th>
-                        <th class="sub-header">VCP</th>
-                        <th class="sub-header">VCT</th>
-                        <th class="sub-header">CTO</th>
-                        <th class="sub-header">TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="posicion : ${posiciones}">
-                        <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
-                        <td class="serie-cell" th:text="${posicion.serie}">*</td>
-                        <td class="serie-cell" th:text="${posicion.tv}">1</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoInicial, 1, 0)}">33,388</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorVcp, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorVct, 1, 0)}">33,388</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorCto, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoVcp, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoVct, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoCto, 1, 0)}">0</td>
-                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoTotal, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoVcp, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoVct, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoCto, 1, 0)}">0</td>
-                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoTotal, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoVcp, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoVct, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoCto, 1, 0)}">0</td>
-                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoTotal, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionVcp, 1, 0)}">0</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionVct, 1, 0)}">33,388</td>
-                        <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionCto, 1, 0)}">0</td>
-                        <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.posicionTotal, 1, 0)}">33,388</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tables-container">
+                <!-- Primera tabla: EMISIÓN -->
+                <div class="table-section">
+                    <h3>Información de Emisión</h3>
+                    <table class="posiciones-table">
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="group-header" scope="colgroup">EMISIÓN</th>
+                            </tr>
+                            <tr>
+                                <th class="sub-header" scope="col">Emisora</th>
+                                <th class="sub-header" scope="col">Serie</th>
+                                <th class="sub-header" scope="col">TV</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="posicion : ${posiciones}">
+                                <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                                <td class="serie-cell" th:text="${posicion.serie}">*</td>
+                                <td class="serie-cell" th:text="${posicion.tv}">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Segunda tabla: SALDO ANTERIOR -->
+                <div class="table-section">
+                    <h3>Saldo Anterior</h3>
+                    <table class="posiciones-table">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="group-header" scope="colgroup">EMISIÓN</th>
+                                <th colspan="4" class="group-header" scope="colgroup">SALDO ANTERIOR</th>
+                            </tr>
+                            <tr>
+                                <th class="sub-header" scope="col">Emisora</th>
+                                <th class="sub-header" scope="col">Saldo Inicial</th>
+                                <th class="sub-header" scope="col">VCP</th>
+                                <th class="sub-header" scope="col">VCT</th>
+                                <th class="sub-header" scope="col">CTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="posicion : ${posiciones}">
+                                <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoInicial, 1, 0)}">33,388</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorVcp, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorVct, 1, 0)}">33,388</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.saldoAnteriorCto, 1, 0)}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tercera tabla: MONTO OPERADO -->
+                <div class="table-section">
+                    <h3>Monto Operado</h3>
+                    <table class="posiciones-table">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="group-header" scope="colgroup">EMISIÓN</th>
+                                <th colspan="4" class="group-header" scope="colgroup">MONTO OPERADO</th>
+                            </tr>
+                            <tr>
+                                <th class="sub-header" scope="col">Emisora</th>
+                                <th class="sub-header" scope="col">VCP</th>
+                                <th class="sub-header" scope="col">VCT</th>
+                                <th class="sub-header" scope="col">CTO</th>
+                                <th class="sub-header" scope="col">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="posicion : ${posiciones}">
+                                <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoVcp, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoVct, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoCto, 1, 0)}">0</td>
+                                <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoOperadoTotal, 1, 0)}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Cuarta tabla: MONTO CANCELADO -->
+                <div class="table-section">
+                    <h3>Monto Cancelado</h3>
+                    <table class="posiciones-table">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="group-header" scope="colgroup">EMISIÓN</th>
+                                <th colspan="4" class="group-header" scope="colgroup">MONTO CANCELADO</th>
+                            </tr>
+                            <tr>
+                                <th class="sub-header" scope="col">Emisora</th>
+                                <th class="sub-header" scope="col">VCP</th>
+                                <th class="sub-header" scope="col">VCT</th>
+                                <th class="sub-header" scope="col">CTO</th>
+                                <th class="sub-header" scope="col">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="posicion : ${posiciones}">
+                                <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoVcp, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoVct, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoCto, 1, 0)}">0</td>
+                                <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoCanceladoTotal, 1, 0)}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Quinta tabla: MONTO MODIFICADO -->
+                <div class="table-section">
+                    <h3>Monto Modificado</h3>
+                    <table class="posiciones-table">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="group-header" scope="colgroup">EMISIÓN</th>
+                                <th colspan="4" class="group-header" scope="colgroup">MONTO MODIFICADO</th>
+                            </tr>
+                            <tr>
+                                <th class="sub-header" scope="col">Emisora</th>
+                                <th class="sub-header" scope="col">VCP</th>
+                                <th class="sub-header" scope="col">VCT</th>
+                                <th class="sub-header" scope="col">CTO</th>
+                                <th class="sub-header" scope="col">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="posicion : ${posiciones}">
+                                <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoVcp, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoVct, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoCto, 1, 0)}">0</td>
+                                <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.montoModificadoTotal, 1, 0)}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Sexta tabla: POSICIÓN -->
+                <div class="table-section">
+                    <h3>Posición Final</h3>
+                    <table class="posiciones-table">
+                        <thead>
+                            <tr>
+                                <th colspan="1" class="group-header" scope="colgroup">EMISIÓN</th>
+                                <th colspan="4" class="group-header" scope="colgroup">POSICIÓN</th>
+                            </tr>
+                            <tr>
+                                <th class="sub-header" scope="col">Emisora</th>
+                                <th class="sub-header" scope="col">VCP</th>
+                                <th class="sub-header" scope="col">VCT</th>
+                                <th class="sub-header" scope="col">CTO</th>
+                                <th class="sub-header" scope="col">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="posicion : ${posiciones}">
+                                <td class="emisor-cell" th:text="${posicion.emisor}">AC</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionVcp, 1, 0)}">0</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionVct, 1, 0)}">33,388</td>
+                                <td class="number-cell" th:text="${#numbers.formatDecimal(posicion.posicionCto, 1, 0)}">0</td>
+                                <td class="number-cell total-cell" th:text="${#numbers.formatDecimal(posicion.posicionTotal, 1, 0)}">33,388</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </body>

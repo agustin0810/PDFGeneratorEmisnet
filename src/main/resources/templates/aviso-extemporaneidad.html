@@ -36,16 +36,17 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: white;
+            background-color: #F8F9FA;
             color: #1D4167;
             line-height: 1.6;
             margin: 0;
-            padding: 40px;
+            padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
+            padding: 20px;
         }
 
         /* Header específico para aviso de extemporaneidad */
@@ -89,13 +90,99 @@
             font-weight: 500;
         }
 
-        /* Main content */
-        .main-content {
-            margin-bottom: 40px;
+        /* Main content cards */
+        .content-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #E4E8ED;
         }
 
-        .content-section {
-            margin-bottom: 30px;
+        .card-title {
+            color: #173452;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #D2D9E1;
+        }
+
+        /* Info grid */
+        .info-grid {
+            width: 100%;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            clear: both;
+        }
+
+        .info-label {
+            color: #4A6785;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #1D4167;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 12px;
+            background-color: #F8F9FA;
+            border-radius: 4px;
+            border-left: 3px solid #1D4167;
+            display: block;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: 1px solid #E4E8ED;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+            min-width: 120px;
+        }
+
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #4A6785;
+            border-color: #E4E8ED;
+        }
+
+        .btn-primary {
+            background-color: #1D4167;
+            color: white;
+            border-color: #1D4167;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .content-card {
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+            
+            .action-buttons {
+                display: none;
+            }
         }
 
         .section-title {
@@ -194,44 +281,46 @@
             <div class="document-date" th:text="${fechaGeneracion}">Fecha de generación</div>
         </div>
 
-        <!-- Main content -->
-        <div class="main-content">
-            <div class="content-section">
-                <h2 class="section-title">Bolsa Mexicana de Valores, S.A.B. de C.V., Informa:</h2>
-                
-                <table class="info-table">
-                    <tr>
-                        <th>CLAVE DE COTIZACIÓN</th>
-                        <td th:text="${claveCotizacion}">-</td>
-                    </tr>
-                    <tr>
-                        <th>RAZÓN SOCIAL</th>
-                        <td th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</td>
-                    </tr>
-                </table>
-            </div>
+        <!-- Información de la empresa -->
+        <div class="content-card">
+            <h2 class="card-title">Bolsa Mexicana de Valores, S.A.B. de C.V., Informa:</h2>
+            <div class="info-grid">
 
-            <div class="content-section">
-                <h3 class="section-title">Tipo de Información</h3>
-                <div class="info-text" th:text="${tipoInformacion}">ASDFASDF</div>
-            </div>
-
-            <div class="content-section">
-                <h3 class="section-title">Causas que Originan el Incumplimiento y Fecha en la que se Presentará</h3>
-                <div class="info-text" th:text="${causasIncumplimiento}">SDFASDFASDF</div>
-            </div>
-
-            <div class="content-section">
-                <h3 class="section-title">Observaciones Adicionales</h3>
-                <div class="info-text" th:text="${observaciones}">-</div>
+                <div class="info-item">
+                    <span class="info-label">CLAVE DE COTIZACIÓN</span>
+                    <span class="info-value" th:text="${claveCotizacion}">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">RAZÓN SOCIAL</span>
+                    <span class="info-value" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
+                </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-text">Bolsa Mexicana de Valores S.A.B. de C.V.</div>
-            <div class="page-number">1</div>
+        <!-- Tipo de Información -->
+        <div class="content-card">
+            <h2 class="card-title">Tipo de Información</h2>
+            <div class="info-text" th:text="${tipoInformacion}">ASDFASDF</div>
         </div>
+
+        <!-- Causas del Incumplimiento -->
+        <div class="content-card">
+            <h2 class="card-title">Causas que Originan el Incumplimiento y Fecha en la que se Presentará</h2>
+            <div class="info-text" th:text="${causasIncumplimiento}">SDFASDFASDF</div>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="content-card">
+            <h2 class="card-title">Observaciones Adicionales</h2>
+            <div class="info-text" th:text="${observaciones}">-</div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="action-buttons">
+            <a href="#" class="btn btn-secondary">Regresar</a>
+            <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        </div>
+
     </div>
 </body>
 </html>
