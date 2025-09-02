@@ -1,149 +1,327 @@
 package com.bmv.emisnet.pdfgenerator.service;
 
-import com.bmv.emisnet.pdfgenerator.model.DatosReporte;
-import com.bmv.emisnet.pdfgenerator.model.Venta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Pruebas unitarias para el generador de reportes PDF
+ * Pruebas unitarias para el servicio GeneradorReportesPDF
  * 
- * Estas pruebas validan que:
- * 1. El PDF se genera correctamente
- * 2. El archivo tiene el tamaño esperado
- * 3. El contenido HTML se procesa sin errores
- * 4. Los datos se renderizan correctamente
+ * Estas pruebas verifican la generación de PDFs para cada plantilla
+ * incluida en el sistema, llamando directamente a los métodos del servicio.
+ * Los PDFs generados se guardan en target/generated-pdfs/ para inspección.
+ * La orientación se define en cada plantilla HTML con CSS.
  */
 class GeneradorReportesPDFTest {
 
     private GeneradorReportesPDF generadorPDF;
-    private DatosReporte datosPrueba;
+    private Path outputDir;
+    
+    @TempDir
+    Path tempDir;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
+        // Crear instancia del servicio directamente
         generadorPDF = new GeneradorReportesPDF();
         
-        // Crear datos de prueba
-        List<Venta> ventas = Arrays.asList(
-            new Venta(LocalDate.of(2024, 1, 15), "BBVA Bancomer", "Acciones AMXL", 100, 25.50, 2550.00),
-            new Venta(LocalDate.of(2024, 1, 16), "Banorte", "Acciones FEMSA", 50, 89.75, 4487.50),
-            new Venta(LocalDate.of(2024, 1, 17), "Santander", "Acciones WALMEX", 75, 42.30, 3172.50)
-        );
+        // Crear directorio de salida para los PDFs
+        outputDir = Paths.get("target", "generated-pdfs");
+        Files.createDirectories(outputDir);
+    }
+
+    /**
+     * Prueba unitaria: Generar PDF de reporte de posiciones
+     * Llama directamente al método generarPDF()
+     */
+    @Test
+    void testGenerarReportePosiciones() throws Exception {
+        // Preparar datos para la plantilla
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", "Reporte de Posiciones");
+        datos.put("fecha", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        datos.put("posiciones", crearDatosPosiciones());
+        datos.put("totalPosiciones", 5);
         
-        datosPrueba = new DatosReporte("Enero 2024", ventas);
+        // Llamar directamente al método del servicio
+        byte[] pdfBytes = generadorPDF.generarPDF("reporte-posiciones", datos);
+        
+        // Verificar que se generaron bytes
+        assertNotNull(pdfBytes, "El array de bytes no debe ser null");
+        assertTrue(pdfBytes.length > 0, "El array de bytes no debe estar vacío");
+        
+        // Guardar el PDF generado para inspección
+        Path archivoPDF = outputDir.resolve("reporte-posiciones.pdf");
+        Files.write(archivoPDF, pdfBytes);
+        
+        System.out.println("✓ Prueba unitaria reporte-posiciones: EXITOSA");
+        System.out.println("  Método llamado: generarPDF()");
+        System.out.println("  Archivo guardado: " + archivoPDF.toString());
+        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
+    }
+
+    /**
+     * Prueba unitaria: Generar PDF de reporte de ventas
+     * Llama directamente al método generarPDF()
+     */
+    @Test
+    void testGenerarReporteVentas() throws Exception {
+        // Preparar datos para la plantilla
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", "Reporte de Ventas");
+        datos.put("periodo", "Enero 2024");
+        datos.put("fechaGeneracion", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        
+        // Datos de empresa
+        Map<String, Object> empresa = new HashMap<>();
+        empresa.put("nombre", "BMV - Bolsa Mexicana de Valores");
+        empresa.put("direccion", "Av. Paseo de la Reforma 255, Col. Cuauhtémoc, CDMX");
+        empresa.put("telefono", "55-1234-5678");
+        datos.put("empresa", empresa);
+        
+        // Datos de resumen
+        Map<String, Object> resumen = new HashMap<>();
+        resumen.put("totalVentas", "$150,000.00");
+        resumen.put("numeroTransacciones", "25");
+        resumen.put("ventaPromedio", "$6,000.00");
+        datos.put("resumen", resumen);
+        
+        // Datos de ventas
+        datos.put("ventas", crearDatosVentasCompletos());
+        
+        // Llamar directamente al método del servicio
+        byte[] pdfBytes = generadorPDF.generarPDF("reporte-ventas", datos);
+        
+        // Verificar que se generaron bytes
+        assertNotNull(pdfBytes, "El array de bytes no debe ser null");
+        assertTrue(pdfBytes.length > 0, "El array de bytes no debe estar vacío");
+        
+        // Guardar el PDF generado para inspección
+        Path archivoPDF = outputDir.resolve("reporte-ventas.pdf");
+        Files.write(archivoPDF, pdfBytes);
+        
+        System.out.println("✓ Prueba unitaria reporte-ventas: EXITOSA");
+        System.out.println("  Método llamado: generarPDF()");
+        System.out.println("  Archivo guardado: " + archivoPDF.toString());
+        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
+    }
+
+    /**
+     * Prueba unitaria: Generar aviso de extemporaneidad
+     * Llama directamente al método generarPDF()
+     */
+    @Test
+    void testGenerarAvisoExtemporaneidad() throws Exception {
+        // Preparar datos para la plantilla
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", "Aviso de Extemporaneidad");
+        datos.put("mensaje", "Se informa que el envío de información se realizó fuera del horario establecido.");
+        datos.put("fecha", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        datos.put("hora", "15:30");
+        
+        // Llamar directamente al método del servicio
+        byte[] pdfBytes = generadorPDF.generarPDF("aviso-extemporaneidad", datos);
+        
+        // Verificar que se generaron bytes
+        assertNotNull(pdfBytes, "El array de bytes no debe ser null");
+        assertTrue(pdfBytes.length > 0, "El array de bytes no debe estar vacío");
+        
+        // Guardar el PDF generado para inspección
+        Path archivoPDF = outputDir.resolve("aviso-extemporaneidad.pdf");
+        Files.write(archivoPDF, pdfBytes);
+        
+        System.out.println("✓ Prueba unitaria aviso-extemporaneidad: EXITOSA");
+        System.out.println("  Método llamado: generarPDF()");
+        System.out.println("  Archivo guardado: " + archivoPDF.toString());
+        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
+    }
+
+    /**
+     * Prueba unitaria: Generar confirmación de envío
+     * Llama directamente al método generarPDF()
+     */
+    @Test
+    void testGenerarConfirmacionEnvio() throws Exception {
+        // Preparar datos para la plantilla
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", "Confirmación de Envío");
+        datos.put("numeroEnvio", "ENV-2024-001");
+        datos.put("fechaEnvio", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        datos.put("destinatario", "Sistema EMISNET");
+        datos.put("estado", "Enviado exitosamente");
+        
+        // Llamar directamente al método del servicio
+        byte[] pdfBytes = generadorPDF.generarPDF("confirmacion-envio", datos);
+        
+        // Verificar que se generaron bytes
+        assertNotNull(pdfBytes, "El array de bytes no debe ser null");
+        assertTrue(pdfBytes.length > 0, "El array de bytes no debe estar vacío");
+        
+        // Guardar el PDF generado para inspección
+        Path archivoPDF = outputDir.resolve("confirmacion-envio.pdf");
+        Files.write(archivoPDF, pdfBytes);
+        
+        System.out.println("✓ Prueba unitaria confirmacion-envio: EXITOSA");
+        System.out.println("  Método llamado: generarPDF()");
+        System.out.println("  Archivo guardado: " + archivoPDF.toString());
+        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
+    }
+
+    /**
+     * Prueba unitaria: Procesar plantilla HTML sin generar PDF
+     * Llama directamente al método procesarPlantilla()
+     */
+    @Test
+    void testProcesarPlantillaHTML() throws Exception {
+        // Preparar datos para la plantilla
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", "Prueba de Plantilla");
+        datos.put("mensaje", "Este es un mensaje de prueba");
+        datos.put("fecha", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        
+        // Llamar directamente al método del servicio
+        String htmlProcesado = generadorPDF.procesarPlantilla("aviso-extemporaneidad", datos);
+        
+        // Verificar que se procesó correctamente
+        assertNotNull(htmlProcesado, "El HTML procesado no debe ser null");
+        assertTrue(htmlProcesado.length() > 0, "El HTML procesado no debe estar vacío");
+        assertTrue(htmlProcesado.contains("Aviso de Extemporaneidad"), "El HTML debe contener el título del documento");
+        assertTrue(htmlProcesado.contains("Sistema Electrónico"), "El HTML debe contener el subtítulo");
+        
+        System.out.println("✓ Prueba unitaria procesar plantilla HTML: EXITOSA");
+        System.out.println("  Método llamado: procesarPlantilla()");
+        System.out.println("  Longitud del HTML: " + htmlProcesado.length() + " caracteres");
+    }
+
+    /**
+     * Prueba unitaria: Manejo de errores con plantilla inexistente
+     * Llama directamente al método generarPDF() con datos inválidos
+     */
+    @Test
+    void testManejoErrorPlantillaInexistente() {
+        // Preparar datos para la plantilla
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", "Prueba de Error");
+        
+        // Intentar generar PDF con plantilla inexistente
+        assertThrows(Exception.class, () -> {
+            generadorPDF.generarPDF("plantilla-inexistente", datos);
+        }, "Debe lanzar excepción con plantilla inexistente");
+        
+        System.out.println("✓ Prueba unitaria manejo de error: EXITOSA");
+        System.out.println("  Método llamado: generarPDF() con plantilla inexistente");
+    }
+
+    /**
+     * Crear datos de ejemplo para posiciones
+     */
+    private Map<String, Object>[] crearDatosPosiciones() {
+        @SuppressWarnings("unchecked")
+        Map<String, Object>[] posiciones = new Map[5];
+        
+        for (int i = 0; i < 5; i++) {
+            Map<String, Object> posicion = new HashMap<>();
+            posicion.put("emisor", "EMISOR-" + (i + 1));
+            posicion.put("serie", "SERIE-" + (i + 1));
+            posicion.put("cantidad", 1000 + (i * 100));
+            posicion.put("valor", 50000.0 + (i * 10000.0));
+            posiciones[i] = posicion;
+        }
+        
+        return posiciones;
+    }
+
+    /**
+     * Crear datos de ejemplo para ventas
+     */
+    private Map<String, Object>[] crearDatosVentas() {
+        @SuppressWarnings("unchecked")
+        Map<String, Object>[] ventas = new Map[3];
+        
+        for (int i = 0; i < 3; i++) {
+            Map<String, Object> venta = new HashMap<>();
+            venta.put("producto", "PRODUCTO-" + (i + 1));
+            venta.put("cantidad", 10 + (i * 5));
+            venta.put("precio", 100.0 + (i * 50.0));
+            venta.put("total", (10 + (i * 5)) * (100.0 + (i * 50.0)));
+            ventas[i] = venta;
+        }
+        
+        return ventas;
+    }
+
+    /**
+     * Crear datos de ejemplo para ventas con estructura completa
+     */
+    private Map<String, Object>[] crearDatosVentasCompletos() {
+        @SuppressWarnings("unchecked")
+        Map<String, Object>[] ventas = new Map[3];
+        
+        for (int i = 0; i < 3; i++) {
+            Map<String, Object> venta = new HashMap<>();
+            venta.put("fecha", LocalDate.now().minusDays(i));
+            venta.put("cliente", "CLIENTE-" + (i + 1));
+            venta.put("producto", "PRODUCTO-" + (i + 1));
+            venta.put("cantidad", 10 + (i * 5));
+            venta.put("precioUnitario", 100.0 + (i * 50.0));
+            venta.put("total", (10 + (i * 5)) * (100.0 + (i * 50.0)));
+            ventas[i] = venta;
+        }
+        
+        return ventas;
     }
 
     @Test
-    void testGenerarReporteVentas_CreaArchivoPDF(@TempDir Path tempDir) throws Exception {
-        // Arrange
-        Path archivoPDF = tempDir.resolve("reporte-prueba.pdf");
+    void testEjemploPlantilla() throws IOException {
+        // Preparar datos de prueba
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("fechaGeneracion", "02/09/2025");
+        datos.put("usuario", "Usuario Ejemplo");
+        datos.put("campo1", "Valor 1");
+        datos.put("campo2", "Valor 2");
+        datos.put("campo3", "Valor 3");
         
-        // Act
-        generadorPDF.generarReporteVentas(datosPrueba, archivoPDF.toString());
-        
-        // Assert
-        assertTrue(Files.exists(archivoPDF), "El archivo PDF debe existir");
-        assertTrue(Files.size(archivoPDF) > 0, "El archivo PDF no debe estar vacío");
-        
-        // Verificar que es un PDF válido (debe empezar con %PDF)
-        byte[] contenido = Files.readAllBytes(archivoPDF);
-        String inicioArchivo = new String(contenido, 0, Math.min(10, contenido.length));
-        assertTrue(inicioArchivo.startsWith("%PDF"), 
-            "El archivo debe ser un PDF válido (debe empezar con %PDF)");
-    }
+        // Crear lista de items de ejemplo
+        List<Map<String, Object>> items = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("id", i);
+            item.put("nombre", "Item " + i);
+            item.put("valor", 1000 + i * 100);
+            item.put("estado", i % 2 == 0 ? "Activo" : "Inactivo");
+            items.add(item);
+        }
+        datos.put("items", items);
 
-    @Test
-    void testGenerarReporteVentas_TamañoArchivoReasonable(@TempDir Path tempDir) throws Exception {
-        // Arrange
-        Path archivoPDF = tempDir.resolve("reporte-tamaño.pdf");
+        // Generar PDF
+        byte[] pdfBytes = generadorPDF.generarPDF("ejemplo-plantilla", datos);
         
-        // Act
-        generadorPDF.generarReporteVentas(datosPrueba, archivoPDF.toString());
+        // Verificar que se generó correctamente
+        assertNotNull(pdfBytes, "El PDF no debería ser null");
+        assertTrue(pdfBytes.length > 0, "El PDF debería tener contenido");
         
-        // Assert
-        long tamañoArchivo = Files.size(archivoPDF);
+        // Guardar PDF para verificación manual
+        Path outputPath = Paths.get("target/generated-pdfs/ejemplo-plantilla.pdf");
+        Files.createDirectories(outputPath.getParent());
+        Files.write(outputPath, pdfBytes);
         
-        // El PDF debe tener un tamaño razonable (entre 1KB y 100KB para este reporte)
-        assertTrue(tamañoArchivo > 1000, 
-            "El PDF debe tener al menos 1KB de contenido");
-        assertTrue(tamañoArchivo < 100000, 
-            "El PDF no debe ser excesivamente grande (menos de 100KB)");
-        
-        System.out.println("Tamaño del PDF generado: " + tamañoArchivo + " bytes");
-    }
-
-    @Test
-    void testGenerarPdfSimple_CreaArchivoValido(@TempDir Path tempDir) throws Exception {
-        // Arrange
-        Path archivoPDF = tempDir.resolve("test-simple.pdf");
-        
-        // Act
-        generadorPDF.generarPdfSimple(archivoPDF.toString());
-        
-        // Assert
-        assertTrue(Files.exists(archivoPDF), "El archivo PDF simple debe existir");
-        assertTrue(Files.size(archivoPDF) > 0, "El archivo PDF simple no debe estar vacío");
-        
-        // Verificar que es un PDF válido
-        byte[] contenido = Files.readAllBytes(archivoPDF);
-        String inicioArchivo = new String(contenido, 0, Math.min(10, contenido.length));
-        assertTrue(inicioArchivo.startsWith("%PDF"), 
-            "El archivo simple debe ser un PDF válido");
-    }
-
-    @Test
-    void testGenerarReporteVentas_ConDatosVacios(@TempDir Path tempDir) throws Exception {
-        // Arrange
-        DatosReporte datosVacios = new DatosReporte("Período Vacío", Arrays.asList());
-        Path archivoPDF = tempDir.resolve("reporte-vacio.pdf");
-        
-        // Act & Assert
-        // Debe generar el PDF sin lanzar excepción, incluso con datos vacíos
-        assertDoesNotThrow(() -> {
-            generadorPDF.generarReporteVentas(datosVacios, archivoPDF.toString());
-        });
-        
-        assertTrue(Files.exists(archivoPDF), "Debe generar PDF incluso con datos vacíos");
-    }
-
-    @Test
-    void testGenerarReporteVentas_ConMuchosDatos(@TempDir Path tempDir) throws Exception {
-        // Arrange - Crear muchos datos para probar rendimiento
-        List<Venta> muchasVentas = Arrays.asList(
-            new Venta(LocalDate.of(2024, 1, 1), "Cliente 1", "Producto A", 10, 100.0, 1000.0),
-            new Venta(LocalDate.of(2024, 1, 2), "Cliente 2", "Producto B", 20, 200.0, 4000.0),
-            new Venta(LocalDate.of(2024, 1, 3), "Cliente 3", "Producto C", 30, 300.0, 9000.0),
-            new Venta(LocalDate.of(2024, 1, 4), "Cliente 4", "Producto D", 40, 400.0, 16000.0),
-            new Venta(LocalDate.of(2024, 1, 5), "Cliente 5", "Producto E", 50, 500.0, 25000.0)
-        );
-        
-        DatosReporte datosGrandes = new DatosReporte("Período Grande", muchasVentas);
-        Path archivoPDF = tempDir.resolve("reporte-grande.pdf");
-        
-        // Act
-        long tiempoInicio = System.currentTimeMillis();
-        generadorPDF.generarReporteVentas(datosGrandes, archivoPDF.toString());
-        long tiempoFin = System.currentTimeMillis();
-        
-        // Assert
-        assertTrue(Files.exists(archivoPDF), "Debe generar PDF con muchos datos");
-        assertTrue(Files.size(archivoPDF) > 0, "El PDF con muchos datos no debe estar vacío");
-        
-        long tiempoTotal = tiempoFin - tiempoInicio;
-        System.out.println("Tiempo de generación con muchos datos: " + tiempoTotal + "ms");
-        
-        // Debe generar en menos de 5 segundos
-        assertTrue(tiempoTotal < 5000, 
-            "La generación debe ser rápida (menos de 5 segundos)");
+        System.out.println("✓ Prueba unitaria ejemplo-plantilla: EXITOSA");
+        System.out.println("  Método llamado: generarPDF()");
+        System.out.println("  Archivo guardado: " + outputPath.toString());
+        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
     }
 }

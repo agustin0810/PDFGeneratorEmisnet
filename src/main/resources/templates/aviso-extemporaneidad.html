@@ -4,274 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aviso de Extemporaneidad - Sistema Electrónico</title>
-    
-    <!-- Importar estilos comunes -->
-    <style th:replace="~{fragments/header :: common-styles}"></style>
-    
-    <style>
-        /* Colores directos para compatibilidad con PDF */
-        .neutral-03 { background-color: #F8F9FA; }
-        .neutral-06 { background-color: #F1F4F6; }
-        .neutral-09 { background-color: #EBEEF1; }
-        .neutral-12 { background-color: #E4E8ED; }
-        .neutral-20 { background-color: #D2D9E1; }
-        .neutral-30 { background-color: #BBC6D1; }
-        .neutral-40 { background-color: #A5B3C2; }
-        .neutral-50 { background-color: #8EA0B3; }
-        .neutral-60 { background-color: #778DA4; }
-        .neutral-70 { background-color: #617A95; }
-        .neutral-80 { background-color: #4A6785; }
-        .neutral-90 { background-color: #345476; }
-        .neutral-100 { background-color: #1D4167; color: white; }
-        .neutral-110 { background-color: #1A3A5D; color: white; }
-        .neutral-120 { color: #173452; }
-        .neutral-130 { color: #142E48; }
-        .neutral-140 { color: #11273E; }
-        .neutral-150 { color: #0F2034; }
-        
-        .texto-principal { color: #1D4167; }
-        .texto-secundario { color: #4A6785; }
-        .texto-claro { color: #778DA4; }
-        .borde-claro { border-color: #E4E8ED; }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F8F9FA;
-            color: #1D4167;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header específico para aviso de extemporaneidad */
-        .header {
-            background: white;
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #E4E8ED;
-            text-align: center;
-        }
-
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .bmv-logo {
-            max-width: 120px;
-            height: auto;
-            max-height: 60px;
-        }
-
-        .title-section {
-            margin-top: 15px;
-        }
-
-        .document-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #173452;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .document-date {
-            font-size: 16px;
-            color: #4A6785;
-            font-weight: 500;
-        }
-
-        /* Main content cards */
-        .content-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #E4E8ED;
-        }
-
-        .card-title {
-            color: #173452;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #D2D9E1;
-        }
-
-        /* Info grid */
-        .info-grid {
-            width: 100%;
-        }
-
-        .info-item {
-            margin-bottom: 15px;
-            clear: both;
-        }
-
-        .info-label {
-            color: #4A6785;
-            font-size: 12px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .info-value {
-            color: #1D4167;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 8px 12px;
-            background-color: #F8F9FA;
-            border-radius: 4px;
-            border-left: 3px solid #1D4167;
-            display: block;
-        }
-
-        /* Action buttons */
-        .action-buttons {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: 1px solid #E4E8ED;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0 10px;
-            min-width: 120px;
-        }
-
-        .btn-secondary {
-            background-color: #f8f9fa;
-            color: #4A6785;
-            border-color: #E4E8ED;
-        }
-
-        .btn-primary {
-            background-color: #1D4167;
-            color: white;
-            border-color: #1D4167;
-        }
-
-        /* Print styles */
-        @media print {
-            body {
-                background: white;
-            }
-            
-            .content-card {
-                border: 1px solid #ddd;
-                break-inside: avoid;
-            }
-            
-            .action-buttons {
-                display: none;
-            }
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #173452;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        .info-table tr {
-            border: 2px solid #E4E8ED;
-        }
-
-        .info-table th {
-            background-color: #F8F9FA;
-            padding: 15px;
-            text-align: left;
-            font-weight: bold;
-            color: #173452;
-            font-size: 14px;
-            width: 40%;
-            border-right: 2px solid #E4E8ED;
-        }
-
-        .info-table td {
-            padding: 15px;
-            background-color: white;
-            color: #1D4167;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .info-text {
-            background-color: #F8F9FA;
-            padding: 15px;
-            border: 2px solid #E4E8ED;
-            border-radius: 4px;
-            color: #1D4167;
-            font-size: 14px;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* Footer */
-        .footer {
-            border-top: 2px solid #E4E8ED;
-            padding-top: 20px;
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-text {
-            color: #4A6785;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .page-number {
-            color: #4A6785;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Print styles */
-        @media print {
-            body {
-                background: white;
-                padding: 20px;
-            }
-            
-            .container {
-                max-width: none;
-            }
-        }
-    </style>
+    <!-- Importar estilos base -->
+    <style th:replace="~{fragments/base-styles :: base-styles}"></style>
 </head>
 <body>
-    <div class="container">
+    <div class="container container-padded">
         <!-- Header reutilizable -->
         <div th:replace="~{fragments/header :: header}"></div>
 
@@ -282,43 +20,43 @@
         </div>
 
         <!-- Información de la empresa -->
-        <div class="content-card">
-            <h2 class="card-title">Bolsa Mexicana de Valores, S.A.B. de C.V., Informa:</h2>
+        <div class="content-card content-card-padded">
+            <h2 class="card-title card-title-large">Bolsa Mexicana de Valores, S.A.B. de C.V., Informa:</h2>
             <div class="info-grid">
 
                 <div class="info-item">
-                    <span class="info-label">CLAVE DE COTIZACIÓN</span>
-                    <span class="info-value" th:text="${claveCotizacion}">-</span>
+                    <span class="info-label info-label-small">CLAVE DE COTIZACIÓN</span>
+                    <span class="info-value info-value-medium" th:text="${claveCotizacion}">-</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">RAZÓN SOCIAL</span>
-                    <span class="info-value" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
+                    <span class="info-label info-label-small">RAZÓN SOCIAL</span>
+                    <span class="info-value info-value-medium" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
                 </div>
             </div>
         </div>
 
         <!-- Tipo de Información -->
-        <div class="content-card">
-            <h2 class="card-title">Tipo de Información</h2>
-            <div class="info-text" th:text="${tipoInformacion}">ASDFASDF</div>
+        <div class="content-card content-card-padded">
+            <h2 class="card-title card-title-large">Tipo de Información</h2>
+            <div class="info-text info-text-medium" th:text="${tipoInformacion}">ASDFASDF</div>
         </div>
 
         <!-- Causas del Incumplimiento -->
-        <div class="content-card">
-            <h2 class="card-title">Causas que Originan el Incumplimiento y Fecha en la que se Presentará</h2>
-            <div class="info-text" th:text="${causasIncumplimiento}">SDFASDFASDF</div>
+        <div class="content-card content-card-padded">
+            <h2 class="card-title card-title-large">Causas que Originan el Incumplimiento y Fecha en la que se Presentará</h2>
+            <div class="info-text info-text-medium" th:text="${causasIncumplimiento}">SDFASDFASDF</div>
         </div>
 
         <!-- Observaciones -->
-        <div class="content-card">
-            <h2 class="card-title">Observaciones Adicionales</h2>
-            <div class="info-text" th:text="${observaciones}">-</div>
+        <div class="content-card content-card-padded">
+            <h2 class="card-title card-title-large">Observaciones Adicionales</h2>
+            <div class="info-text info-text-medium" th:text="${observaciones}">-</div>
         </div>
 
         <!-- Action buttons -->
         <div class="action-buttons">
             <a href="#" class="btn btn-secondary">Regresar</a>
-            <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+            <button type="button" class="btn btn-primary" onclick="window.print()">Imprimir</button>
         </div>
 
     </div>
