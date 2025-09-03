@@ -16,7 +16,7 @@
         <!-- Título del documento -->
         <div class="title-section">
             <h1 class="document-title">Aviso de Extemporaneidad</h1>
-            <div class="document-date" th:text="${fechaGeneracion}">Fecha de generación</div>
+            <div class="document-date" th:text="${fechaGeneracion}"></div>
         </div>
 
         <!-- Información de la empresa -->
@@ -26,11 +26,11 @@
 
                 <div class="info-item">
                     <span class="info-label info-label-small">CLAVE DE COTIZACIÓN</span>
-                    <span class="info-value info-value-medium" th:text="${claveCotizacion}">-</span>
+                    <span class="info-value info-value-medium" th:text="${claveCotizacion}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">RAZÓN SOCIAL</span>
-                    <span class="info-value info-value-medium" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
+                    <span class="info-value info-value-medium" th:text="${razonSocial}"></span>
                 </div>
             </div>
         </div>
@@ -38,19 +38,19 @@
         <!-- Tipo de Información -->
         <div class="content-card content-card-padded">
             <h2 class="card-title card-title-large">Tipo de Información</h2>
-            <div class="info-text info-text-medium" th:text="${tipoInformacion}">ASDFASDF</div>
+            <div class="info-text info-text-medium" th:text="${tipoInformacion}"></div>
         </div>
 
         <!-- Causas del Incumplimiento -->
         <div class="content-card content-card-padded">
             <h2 class="card-title card-title-large">Causas que Originan el Incumplimiento y Fecha en la que se Presentará</h2>
-            <div class="info-text info-text-medium" th:text="${causasIncumplimiento}">SDFASDFASDF</div>
+            <div class="info-text info-text-medium" th:text="${causasIncumplimiento}"></div>
         </div>
 
         <!-- Observaciones -->
         <div class="content-card content-card-padded">
             <h2 class="card-title card-title-large">Observaciones Adicionales</h2>
-            <div class="info-text info-text-medium" th:text="${observaciones}">-</div>
+            <div class="info-text info-text-medium" th:text="${observaciones}"></div>
         </div>
 
         <!-- Action buttons -->

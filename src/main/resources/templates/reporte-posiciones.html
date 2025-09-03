@@ -21,12 +21,16 @@
             <h1 class="card-title">Reporte de Consulta de Posiciones</h1>
             <div class="info-grid">
                 <div class="info-item">
-                    <span class="info-label">FECHA DE CONSULTA</span>
-                    <span class="info-value" th:text="${fechaConsulta}">-</span>
+                    <span class="info-label">FECHA DE OPERACIÓN</span>
+                    <span class="info-value" th:text="${fechaOperacion}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">CASA DE BOLSA</span>
-                    <span class="info-value" th:text="${casaBolsa}">-</span>
+                    <span class="info-value" th:text="${casaBolsa}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">RAZÓN SOCIAL</span>
+                    <span class="info-value" th:text="${razonSocial}"></span>
                 </div>
             </div>
         </div>
@@ -62,21 +66,21 @@
                     <tbody>
                         <tr th:each="posicion : ${grupo.posiciones}">
                             <!-- EMISIÓN -->
-                            <td class="emisora-cell" th:text="${posicion.emisora}">-</td>
-                            <td class="serie-cell" th:text="${posicion.serie}">-</td>
-                            <td class="tv-cell" th:text="${posicion.tv}">-</td>
+                            <td class="emisora-cell" th:text="${posicion.emisora}"></td>
+                            <td class="serie-cell" th:text="${posicion.serie}"></td>
+                            <td class="tv-cell" th:text="${posicion.tv}"></td>
                             
                             <!-- SALDO ANTERIOR -->
-                            <td class="number-cell" th:text="${posicion.saldoInicial}">-</td>
-                            <td class="number-cell" th:text="${posicion.saldoAnteriorVcp}">-</td>
-                            <td class="number-cell" th:text="${posicion.saldoAnteriorVct}">-</td>
-                            <td class="number-cell" th:text="${posicion.saldoAnteriorCto}">-</td>
+                            <td class="number-cell" th:text="${posicion.saldoInicial}"></td>
+                            <td class="number-cell" th:text="${posicion.saldoAnteriorVcp}"></td>
+                            <td class="number-cell" th:text="${posicion.saldoAnteriorVct}"></td>
+                            <td class="number-cell" th:text="${posicion.saldoAnteriorCto}"></td>
                             
                             <!-- MONTO OPERADO -->
-                            <td class="number-cell" th:text="${posicion.montoOperadoVcp}">-</td>
-                            <td class="number-cell" th:text="${posicion.montoOperadoVct}">-</td>
-                            <td class="number-cell" th:text="${posicion.montoOperadoCto}">-</td>
-                            <td class="number-cell total-cell" th:text="${posicion.montoOperadoTotal}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoOperadoVcp}"></td>
+                            <td class="number-cell" th:text="${posicion.montoOperadoVct}"></td>
+                            <td class="number-cell" th:text="${posicion.montoOperadoCto}"></td>
+                            <td class="number-cell total-cell" th:text="${posicion.montoOperadoTotal}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -109,21 +113,21 @@
                     <tbody>
                         <tr th:each="posicion : ${grupo.posiciones}">
                             <!-- EMISIÓN -->
-                            <td class="emisora-cell" th:text="${posicion.emisora}">-</td>
-                            <td class="serie-cell" th:text="${posicion.serie}">-</td>
-                            <td class="tv-cell" th:text="${posicion.tv}">-</td>
+                            <td class="emisora-cell" th:text="${posicion.emisora}"></td>
+                            <td class="serie-cell" th:text="${posicion.serie}"></td>
+                            <td class="tv-cell" th:text="${posicion.tv}"></td>
                             
                             <!-- MONTO CANCELADO -->
-                            <td class="number-cell" th:text="${posicion.montoCanceladoVcp}">-</td>
-                            <td class="number-cell" th:text="${posicion.montoCanceladoVct}">-</td>
-                            <td class="number-cell" th:text="${posicion.montoCanceladoCto}">-</td>
-                            <td class="number-cell total-cell" th:text="${posicion.montoCanceladoTotal}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoCanceladoVcp}"></td>
+                            <td class="number-cell" th:text="${posicion.montoCanceladoVct}"></td>
+                            <td class="number-cell" th:text="${posicion.montoCanceladoCto}"></td>
+                            <td class="number-cell total-cell" th:text="${posicion.montoCanceladoTotal}"></td>
                             
                             <!-- MONTO MODIFICADO -->
-                            <td class="number-cell" th:text="${posicion.montoModificadoVcp}">-</td>
-                            <td class="number-cell" th:text="${posicion.montoModificadoVct}">-</td>
-                            <td class="number-cell" th:text="${posicion.montoModificadoCto}">-</td>
-                            <td class="number-cell total-cell" th:text="${posicion.montoModificadoTotal}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoModificadoVcp}"></td>
+                            <td class="number-cell" th:text="${posicion.montoModificadoVct}"></td>
+                            <td class="number-cell" th:text="${posicion.montoModificadoCto}"></td>
+                            <td class="number-cell total-cell" th:text="${posicion.montoModificadoTotal}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -151,15 +155,15 @@
                     <tbody>
                         <tr th:each="posicion : ${grupo.posiciones}">
                             <!-- EMISIÓN -->
-                            <td class="emisora-cell" th:text="${posicion.emisora}">-</td>
-                            <td class="serie-cell" th:text="${posicion.serie}">-</td>
-                            <td class="tv-cell" th:text="${posicion.tv}">-</td>
+                            <td class="emisora-cell" th:text="${posicion.emisora}"></td>
+                            <td class="serie-cell" th:text="${posicion.serie}"></td>
+                            <td class="tv-cell" th:text="${posicion.tv}"></td>
                             
                             <!-- POSICIÓN -->
-                            <td class="number-cell" th:text="${posicion.posicionVcp}">-</td>
-                            <td class="number-cell" th:text="${posicion.posicionVct}">-</td>
-                            <td class="number-cell" th:text="${posicion.posicionCto}">-</td>
-                            <td class="number-cell total-cell" th:text="${posicion.posicionTotal}">-</td>
+                            <td class="number-cell" th:text="${posicion.posicionVcp}"></td>
+                            <td class="number-cell" th:text="${posicion.posicionVct}"></td>
+                            <td class="number-cell" th:text="${posicion.posicionCto}"></td>
+                            <td class="number-cell total-cell" th:text="${posicion.posicionTotal}"></td>
                         </tr>
                     </tbody>
                 </table>

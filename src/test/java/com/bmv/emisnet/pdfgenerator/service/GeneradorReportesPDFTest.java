@@ -56,8 +56,9 @@ class GeneradorReportesPDFTest {
     void testGenerarReportePosiciones() throws Exception {
         // Crear objeto de prueba con la estructura correcta para la plantilla
         ReportePosicionesTest reporte = new ReportePosicionesTest();
-        reporte.setFechaConsulta(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        reporte.setCasaBolsa("ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+        reporte.setFechaOperacion(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        reporte.setCasaBolsa("ACTIN");
+        reporte.setRazonSocial("ACTINVER CASA DE BOLSA, S.A. DE C.V.");
         
         // Crear grupo de posiciones
         ReportePosicionesTest.GrupoPosiciones grupo = new ReportePosicionesTest.GrupoPosiciones();
@@ -187,8 +188,8 @@ class GeneradorReportesPDFTest {
         ConfirmacionEnvioTest confirmacion = new ConfirmacionEnvioTest();
         confirmacion.setFechaHoraEnvio(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " 10:30:00");
         confirmacion.setClave("ACTINVER");
-        confirmacion.setRazonSocial("ACTINVER CASA DE BOLSA, S.A. DE C.V.");
-        confirmacion.setFolioRecepcion("1452904");
+        confirmacion.setRazonSocial("ACTINVER CASA DE BOLSAA, S.A. DE C.V.");
+        confirmacion.setFolioRecepcion("14529044");
         confirmacion.setResponsable("ACTINVER EQUITY Peyrani");
         confirmacion.setPeriodo("Ejercicio 2025-02");
         

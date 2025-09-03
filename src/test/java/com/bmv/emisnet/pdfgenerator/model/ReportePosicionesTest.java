@@ -16,8 +16,9 @@ import java.util.List;
 @NoArgsConstructor
 public class ReportePosicionesTest {
     
-    private String fechaConsulta;
+    private String fechaOperacion;
     private String casaBolsa;
+    private String razonSocial;
     private List<GrupoPosiciones> gruposPosiciones;
     
     /**

@@ -16,10 +16,9 @@
         <!-- Información del header -->
         <div class="header-info">
             <div class="header-top">
-                <div class="timestamp" th:text="${fechaHoraEnvio}">2025-01-15 10:30:00</div>
-                <div class="system-title">Sistema Electrónico de Información</div>
+                <div class="timestamp" th:text="${fechaHoraEnvio}"></div>
+                <div class="system-title">Sistema Electrónico de Comunicación con Emisoras de Valores</div>
             </div>
-            <a href="#" class="breadcrumb">Confirmación de Envío</a>
         </div>
 
         <!-- Acuse de recibo -->
@@ -28,27 +27,27 @@
             <div class="info-grid">
                 <div class="info-item">
                     <span class="info-label info-label-small">Clave</span>
-                    <span class="info-value info-value-medium" th:text="${clave}">ACTIN</span>
+                    <span class="info-value info-value-medium" th:text="${clave}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">Razón social</span>
-                    <span class="info-value info-value-medium" th:text="${razonSocial}">ACTINVER CASA DE BOLSA, S.A. DE C.V.</span>
+                    <span class="info-value info-value-medium" th:text="${razonSocial}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">Folio de recepción</span>
-                    <span class="info-value info-value-medium" th:text="${folioRecepcion}">1452904</span>
+                    <span class="info-value info-value-medium" th:text="${folioRecepcion}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">Responsable</span>
-                    <span class="info-value info-value-medium" th:text="${responsable}">ACTINVER EQUITY Peyrani</span>
+                    <span class="info-value info-value-medium" th:text="${responsable}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">Fecha y hora del envío</span>
-                    <span class="info-value info-value-medium" th:text="${fechaHoraEnvio}">2025-09-01 09:11:32.227</span>
+                    <span class="info-value info-value-medium" th:text="${fechaHoraEnvio}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">Periodo</span>
-                    <span class="info-value info-value-medium" th:text="${periodo}">Ejercicio 2025-02</span>
+                    <span class="info-value info-value-medium" th:text="${periodo}"></span>
                 </div>
             </div>
         </div>
@@ -66,10 +65,10 @@
                 <tbody>
                     <tr th:each="archivo : ${archivos}">
                         <td>
-                            <span class="text-primary font-bold" th:text="${archivo.nombre}">constrim.pdf</span>
+                            <span class="text-primary font-bold" th:text="${archivo.nombre}"></span>
                         </td>
                         <td>
-                            <span class="text-secondary" th:text="${archivo.descripcion}">Constancia Trimestral</span>
+                            <span class="text-secondary" th:text="${archivo.descripcion}"></span>
                         </td>
                     </tr>
                 </tbody>

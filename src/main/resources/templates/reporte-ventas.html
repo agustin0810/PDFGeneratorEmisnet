@@ -15,15 +15,15 @@
 
         <!-- Título del documento -->
         <div class="content-card content-card-padded">
-            <h1 class="card-title card-title-large" th:text="${titulo}">Reporte de Ventas</h1>
+            <h1 class="card-title card-title-large" th:text="${titulo}"></h1>
             <div class="info-grid">
                 <div class="info-item">
                     <span class="info-label info-label-small">PERÍODO</span>
-                    <span class="info-value info-value-medium" th:text="${periodo}">Enero 2024</span>
+                    <span class="info-value info-value-medium" th:text="${periodo}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">FECHA DE GENERACIÓN</span>
-                    <span class="info-value info-value-medium" th:text="${fechaGeneracion}">2024-01-15</span>
+                    <span class="info-value info-value-medium" th:text="${fechaGeneracion}"></span>
                 </div>
             </div>
         </div>
@@ -34,15 +34,15 @@
             <div class="info-grid">
                 <div class="info-item">
                     <span class="info-label info-label-small">NOMBRE</span>
-                    <span class="info-value info-value-medium" th:text="${empresa.nombre}">Nombre Empresa</span>
+                    <span class="info-value info-value-medium" th:text="${empresa.nombre}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">DIRECCIÓN</span>
-                    <span class="info-value info-value-medium" th:text="${empresa.direccion}">Dirección</span>
+                    <span class="info-value info-value-medium" th:text="${empresa.direccion}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">TELÉFONO</span>
-                    <span class="info-value info-value-medium" th:text="${empresa.telefono}">Teléfono</span>
+                    <span class="info-value info-value-medium" th:text="${empresa.telefono}"></span>
                 </div>
             </div>
         </div>
@@ -53,15 +53,15 @@
             <div class="info-grid">
                 <div class="info-item">
                     <span class="info-label info-label-small">TOTAL VENTAS</span>
-                    <span class="info-value info-value-medium" th:text="${resumen.totalVentas}">$0</span>
+                    <span class="info-value info-value-medium" th:text="${resumen.totalVentas}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">NÚMERO DE TRANSACCIONES</span>
-                    <span class="info-value info-value-medium" th:text="${resumen.numeroTransacciones}">0</span>
+                    <span class="info-value info-value-medium" th:text="${resumen.numeroTransacciones}"></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label info-label-small">VENTA PROMEDIO</span>
-                    <span class="info-value info-value-medium" th:text="${resumen.ventaPromedio}">$0</span>
+                    <span class="info-value info-value-medium" th:text="${resumen.ventaPromedio}"></span>
                 </div>
             </div>
         </div>
@@ -82,14 +82,14 @@
                 </thead>
                 <tbody>
                     <tr th:each="venta : ${ventas}">
-                        <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy')}">01/01/2024</td>
-                        <td th:text="${venta.cliente}">Cliente</td>
-                        <td th:text="${venta.producto}">Producto</td>
-                        <td class="text-center" th:text="${venta.cantidad}">1</td>
-                        <td class="text-right font-mono" th:text="${#numbers.formatCurrency(venta.precioUnitario)}">$0</td>
+                        <td th:text="${#temporals.format(venta.fecha, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${venta.cliente}"></td>
+                        <td th:text="${venta.producto}"></td>
+                        <td class="text-center" th:text="${venta.cantidad}"></td>
+                        <td class="text-right font-mono" th:text="${#numbers.formatCurrency(venta.precioUnitario)}"></td>
                         <td class="text-right font-mono total-cell" 
                             th:text="${#numbers.formatCurrency(venta.total)}"
-                            th:class="${venta.total > 1000} ? 'total-cell' : 'text-right font-mono'">$0</td>
+                            th:class="${venta.total > 1000} ? 'total-cell' : 'text-right font-mono'"></td>
                     </tr>
                 </tbody>
             </table>
@@ -99,12 +99,12 @@
         <div th:if="${incluirGrafico}" class="content-card content-card-padded">
             <h2 class="card-title card-title-large">Ventas por Mes</h2>
             <div th:each="mes : ${ventasPorMes}" class="info-item">
-                <span class="info-label info-label-small" th:text="${mes.nombre}">Mes</span>
-                <div class="info-value info-value-medium">
-                    <div class="neutral-100" 
-                         th:style="'width: ' + ${mes.porcentaje} + '%; height: 20px; display: inline-block;'"></div>
-                    <span class="text-right font-mono" th:text="${#numbers.formatCurrency(mes.total)}">$0</span>
-                </div>
+                                    <span class="info-label info-label-small" th:text="${mes.nombre}"></span>
+                    <div class="info-value info-value-medium">
+                        <div class="neutral-100" 
+                             th:style="'width: ' + ${mes.porcentaje} + '%; height: 20px; display: inline-block;'"></div>
+                        <span class="text-right font-mono" th:text="${#numbers.formatCurrency(mes.total)}"></span>
+                    </div>
             </div>
         </div>
 
