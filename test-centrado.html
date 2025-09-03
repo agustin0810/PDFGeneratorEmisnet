@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test de Centrado - Tablas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .table-container {
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+            text-align: center;
+        }
+        
+        .table-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            background-color: #e0e0e0;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .posiciones-table-1,
+        .posiciones-table-2,
+        .posiciones-table-3 {
+            width: 90% !important;
+            max-width: 90% !important;
+            border: 2px solid #E4E8ED !important;
+            border-collapse: collapse !important;
+            margin: 0 auto !important;
+            display: inline-block !important;
+        }
+        
+        .posiciones-table-1 th,
+        .posiciones-table-1 td,
+        .posiciones-table-2 th,
+        .posiciones-table-2 td,
+        .posiciones-table-3 th,
+        .posiciones-table-3 td {
+            border: 1px solid #E4E8ED !important;
+            padding: 8px 4px !important;
+            font-size: 11px !important;
+            text-align: center !important;
+        }
+        
+        .posiciones-table-1 .header-row-main th,
+        .posiciones-table-2 .header-row-main th,
+        .posiciones-table-3 .header-row-main th {
+            background-color: #1D4167 !important;
+            color: #FFFFFF !important;
+            font-weight: bold !important;
+        }
+        
+        .posiciones-table-1 .header-row-sub th,
+        .posiciones-table-2 .header-row-sub th,
+        .posiciones-table-3 .header-row-sub th {
+            background-color: #4A6785 !important;
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Anchos específicos para tabla 2 */
+        .posiciones-table-2 th:nth-child(1), .posiciones-table-2 td:nth-child(1) { width: 8.25% !important; max-width: 8.25% !important; }
+        .posiciones-table-2 th:nth-child(2), .posiciones-table-2 td:nth-child(2) { width: 5.625% !important; max-width: 5.625% !important; }
+        .posiciones-table-2 th:nth-child(3), .posiciones-table-2 td:nth-child(3) { width: 4.5% !important; max-width: 4.5% !important; }
+        .posiciones-table-2 th:nth-child(4), .posiciones-table-2 td:nth-child(4) { width: 6.75% !important; max-width: 6.75% !important; }
+        .posiciones-table-2 th:nth-child(5), .posiciones-table-2 td:nth-child(5) { width: 6.25% !important; max-width: 6.25% !important; }
+        .posiciones-table-2 th:nth-child(6), .posiciones-table-2 td:nth-child(6) { width: 6.25% !important; max-width: 6.25% !important; }
+        .posiciones-table-2 th:nth-child(7), .posiciones-table-2 td:nth-child(7) { width: 6.25% !important; max-width: 6.25% !important; }
+        .posiciones-table-2 th:nth-child(8), .posiciones-table-2 td:nth-child(8) { width: 6.25% !important; max-width: 6.25% !important; }
+        .posiciones-table-2 th:nth-child(9), .posiciones-table-2 td:nth-child(9) { width: 6.25% !important; max-width: 6.25% !important; }
+        .posiciones-table-2 th:nth-child(10), .posiciones-table-2 td:nth-child(10) { width: 6.25% !important; max-width: 6.25% !important; }
+        .posiciones-table-2 th:nth-child(11), .posiciones-table-2 td:nth-child(11) { width: 6.25% !important; max-width: 6.25% !important; }
+    </style>
+</head>
+<body>
+    <h1>Test de Centrado de Tablas</h1>
+    
+    <div class="table-section">
+        <h3>Grupo de Valores Gubernamentales</h3>
+        
+        <!-- Primera tabla -->
+        <div class="table-container">
+            <div class="section-title">EMISIÓN - SALDO ANTERIOR - MONTO OPERADO</div>
+            <table class="posiciones-table-1">
+                <thead>
+                    <tr class="header-row-main">
+                        <th scope="colgroup" colspan="3">EMISIÓN</th>
+                        <th scope="colgroup" colspan="4">SALDO ANTERIOR</th>
+                        <th scope="colgroup" colspan="4">MONTO OPERADO</th>
+                    </tr>
+                    <tr class="header-row-sub">
+                        <th scope="col">EMISORA</th>
+                        <th scope="col">SERIE</th>
+                        <th scope="col">TV</th>
+                        <th scope="col">SALDO INICIAL</th>
+                        <th scope="col">VCP</th>
+                        <th scope="col">VCT</th>
+                        <th scope="col">CTO</th>
+                        <th scope="col">VCP</th>
+                        <th scope="col">VCT</th>
+                        <th scope="col">CTO</th>
+                        <th scope="col">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WC</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>33388</td>
+                        <td>0</td>
+                        <td>33388</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Segunda tabla (la problemática) -->
+        <div class="table-container">
+            <div class="section-title">EMISIÓN - MONTO CANCELADO - MONTO MODIFICADO</div>
+            <table class="posiciones-table-2">
+                <thead>
+                    <tr class="header-row-main">
+                        <th scope="colgroup" colspan="3">EMISIÓN</th>
+                        <th scope="colgroup" colspan="4">MONTO CANCELADO</th>
+                        <th scope="colgroup" colspan="4">MONTO MODIFICADO</th>
+                    </tr>
+                    <tr class="header-row-sub">
+                        <th scope="col">EMISORA</th>
+                        <th scope="col">SERIE</th>
+                        <th scope="col">TV</th>
+                        <th scope="col">VCP</th>
+                        <th scope="col">VCT</th>
+                        <th scope="col">CTO</th>
+                        <th scope="col">TOTAL</th>
+                        <th scope="col">VCP</th>
+                        <th scope="col">VCT</th>
+                        <th scope="col">CTO</th>
+                        <th scope="col">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WC</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Tercera tabla -->
+        <div class="table-container">
+            <div class="section-title">EMISIÓN - POSICIÓN</div>
+            <table class="posiciones-table-3">
+                <thead>
+                    <tr class="header-row-main">
+                        <th scope="colgroup" colspan="3">EMISIÓN</th>
+                        <th scope="colgroup" colspan="4">POSICIÓN</th>
+                    </tr>
+                    <tr class="header-row-sub">
+                        <th scope="col">EMISORA</th>
+                        <th scope="col">SERIE</th>
+                        <th scope="col">TV</th>
+                        <th scope="col">VCP</th>
+                        <th scope="col">VCT</th>
+                        <th scope="col">CTO</th>
+                        <th scope="col">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>WC</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>33388</td>
+                        <td>0</td>
+                        <td>33388</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

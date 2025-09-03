@@ -1,0 +1,384 @@
+<!-- Fragmento para componentes de tabla especializados -->
+<style th:fragment="table-components">
+    /* ========================================
+       COMPONENTES DE TABLA ESPECIALIZADOS
+       Para reportes financieros y de datos
+       ======================================== */
+
+    /* ========================================
+       1. TABLAS FINANCIERAS
+       ======================================== */
+
+    /* Tabla de balance general */
+    .table-balance {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-xs);
+    }
+
+    .table-balance th,
+    .table-balance td {
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-balance th {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-balance td {
+        padding: 4px 3px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+    }
+
+    .table-balance .account-name {
+        text-align: left;
+        font-weight: 500;
+        color: var(--color-accent);
+    }
+
+    .table-balance .total-row {
+        background-color: var(--color-neutral-06) !important;
+        font-weight: 600;
+        color: var(--color-accent);
+    }
+
+    /* Tabla de flujo de efectivo */
+    .table-cashflow {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-xs);
+    }
+
+    .table-cashflow th,
+    .table-cashflow td {
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-cashflow th {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-cashflow td {
+        padding: 4px 3px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+    }
+
+    .table-cashflow .cash-inflow {
+        color: var(--color-success);
+    }
+
+    .table-cashflow .cash-outflow {
+        color: var(--color-danger);
+    }
+
+    /* ========================================
+       2. TABLAS DE OPERACIONES
+       ======================================== */
+
+    /* Tabla de operaciones bursátiles */
+    .table-operations {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-xs);
+    }
+
+    .table-operations th,
+    .table-operations td {
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-operations th {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-operations td {
+        padding: 4px 3px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: center;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+    }
+
+    .table-operations .operation-buy {
+        color: var(--color-success);
+        font-weight: 500;
+    }
+
+    .table-operations .operation-sell {
+        color: var(--color-danger);
+        font-weight: 500;
+    }
+
+    .table-operations .operation-hold {
+        color: var(--color-warning);
+        font-weight: 500;
+    }
+
+    /* ========================================
+       3. TABLAS DE RIESGO
+       ======================================== */
+
+    /* Tabla de métricas de riesgo */
+    .table-risk {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-xs);
+    }
+
+    .table-risk th,
+    .table-risk td {
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-risk th {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-risk td {
+        padding: 4px 3px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+    }
+
+    .table-risk .risk-low {
+        color: var(--color-success);
+    }
+
+    .table-risk .risk-medium {
+        color: var(--color-warning);
+    }
+
+    .table-risk .risk-high {
+        color: var(--color-danger);
+    }
+
+    /* ========================================
+       4. TABLAS DE COMPARACIÓN
+       ======================================== */
+
+    /* Tabla de comparación de períodos */
+    .table-comparison {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-xs);
+    }
+
+    .table-comparison th,
+    .table-comparison td {
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-comparison th {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    .table-comparison td {
+        padding: 4px 3px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+    }
+
+    .table-comparison .change-positive {
+        color: var(--color-success);
+    }
+
+    .table-comparison .change-negative {
+        color: var(--color-danger);
+    }
+
+    .table-comparison .change-neutral {
+        color: var(--color-secondary);
+    }
+
+    /* ========================================
+       5. UTILIDADES DE TABLA
+       ======================================== */
+
+    /* Anchos de columna para diferentes tipos de datos */
+    .col-date { width: 12% !important; max-width: 12% !important; }
+    .col-time { width: 8% !important; max-width: 8% !important; }
+    .col-code { width: 10% !important; max-width: 10% !important; }
+    .col-name { width: 20% !important; max-width: 20% !important; }
+    .col-description { width: 25% !important; max-width: 25% !important; }
+    .col-amount { width: 12% !important; max-width: 12% !important; }
+    .col-percentage { width: 10% !important; max-width: 10% !important; }
+    .col-status { width: 8% !important; max-width: 8% !important; }
+    .col-action { width: 8% !important; max-width: 8% !important; }
+
+    /* Alineaciones específicas */
+    .text-monetary {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: 500;
+    }
+
+    .text-percentage {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: 500;
+    }
+
+    .text-code {
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        font-weight: 500;
+        color: var(--color-accent);
+    }
+
+    .text-status {
+        text-align: center;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: var(--font-size-xs);
+    }
+
+    /* Estados de fila */
+    .row-highlight {
+        background-color: var(--color-neutral-03) !important;
+    }
+
+    .row-selected {
+        background-color: var(--color-neutral-06) !important;
+        border-left: 3px solid var(--color-primary);
+    }
+
+    .row-total {
+        background-color: var(--color-neutral-06) !important;
+        font-weight: 600;
+        color: var(--color-accent);
+    }
+
+    .row-subtotal {
+        background-color: var(--color-neutral-09) !important;
+        font-weight: 500;
+        color: var(--color-accent);
+    }
+
+    /* ========================================
+       6. COMPONENTES DE TABLA RESPONSIVOS
+       ======================================== */
+
+    /* Tabla con scroll horizontal */
+    .table-scroll {
+        overflow-x: auto;
+        white-space: nowrap;
+        border: 1px solid var(--color-neutral-12);
+        border-radius: var(--border-radius-sm);
+    }
+
+    .table-scroll table {
+        min-width: 800px;
+    }
+
+    /* Tabla dividida en columnas */
+    .table-split {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-sm);
+    }
+
+    .table-split table {
+        width: 100%;
+    }
+
+    /* ========================================
+       7. ANIMACIONES Y EFECTOS
+       ======================================== */
+
+    /* Hover effects */
+    .table-hover tbody tr:hover {
+        background-color: var(--color-neutral-03);
+        transition: background-color 0.2s ease;
+    }
+
+    /* Zebra striping */
+    .table-zebra tbody tr:nth-child(even) {
+        background-color: var(--color-neutral-03);
+    }
+
+    /* ========================================
+       8. ESTILOS DE IMPRESIÓN PARA TABLAS
+       ======================================== */
+
+    @media print {
+        .table-scroll {
+            overflow-x: visible;
+            white-space: normal;
+        }
+
+        .table-split {
+            display: block;
+        }
+
+        .table-split table {
+            margin-bottom: var(--spacing-md);
+            page-break-inside: avoid;
+        }
+
+        /* Evitar cortes de página en filas importantes */
+        .row-total,
+        .row-subtotal {
+            page-break-inside: avoid;
+        }
+    }
+</style>

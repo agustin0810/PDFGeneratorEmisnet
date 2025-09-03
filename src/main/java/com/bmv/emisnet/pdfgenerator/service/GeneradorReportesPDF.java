@@ -59,6 +59,12 @@ public class GeneradorReportesPDF {
             
             // Configurar documento HTML
             renderer.setDocumentFromString(htmlContent);
+            
+            // Configurar la ruta base para recursos (imágenes, CSS, etc.)
+            // Esto permite que el renderer encuentre las imágenes con rutas relativas
+            String baseUrl = this.getClass().getClassLoader().getResource("templates/").toString();
+            renderer.getSharedContext().setBaseURL(baseUrl);
+            
             renderer.layout();
             renderer.createPDF(outputStream);
             
@@ -83,5 +89,56 @@ public class GeneradorReportesPDF {
         }
         
         return templateEngine.process(nombrePlantilla, context);
+    }
+    
+    /**
+     * Genera un PDF a partir de una plantilla y un objeto Java
+     * Convierte automáticamente el objeto a un Map usando ObjectToMap
+     * 
+     * @param nombrePlantilla Nombre de la plantilla (sin extensión .html)
+     * @param objeto Objeto a convertir y usar como datos
+     * @return Array de bytes con el contenido del PDF
+     * @throws IOException Si hay error de I/O
+     * @throws DocumentException Si hay error en la generación del PDF
+     */
+    public byte[] generarPDFDesdeObjeto(String nombrePlantilla, Object objeto) 
+            throws IOException, DocumentException {
+        
+        Map<String, Object> datos = ObjectToMapConverter.convertToMap(objeto);
+        return generarPDF(nombrePlantilla, datos);
+    }
+    
+    /**
+     * Genera un PDF a partir de una plantilla y un objeto Java incluyendo herencia
+     * Convierte automáticamente el objeto a un Map incluyendo campos de superclases
+     * 
+     * @param nombrePlantilla Nombre de la plantilla (sin extensión .html)
+     * @param objeto Objeto a convertir y usar como datos
+     * @return Array de bytes con el contenido del PDF
+     * @throws IOException Si hay error de I/O
+     * @throws DocumentException Si hay error en la generación del PDF
+     */
+    public byte[] generarPDFDesdeObjetoConHerencia(String nombrePlantilla, Object objeto) 
+            throws IOException, DocumentException {
+        
+        Map<String, Object> datos = ObjectToMapConverter.convertToMapIncludingInheritance(objeto);
+        return generarPDF(nombrePlantilla, datos);
+    }
+    
+    /**
+     * Genera un PDF a partir de una plantilla y un objeto Java excluyendo campos específicos
+     * 
+     * @param nombrePlantilla Nombre de la plantilla (sin extensión .html)
+     * @param objeto Objeto a convertir y usar como datos
+     * @param camposExcluir Campos que no se incluirán en el mapa
+     * @return Array de bytes con el contenido del PDF
+     * @throws IOException Si hay error de I/O
+     * @throws DocumentException Si hay error en la generación del PDF
+     */
+    public byte[] generarPDFDesdeObjetoExcluyendo(String nombrePlantilla, Object objeto, String... camposExcluir) 
+            throws IOException, DocumentException {
+        
+        Map<String, Object> datos = ObjectToMapConverter.convertToMapExcluding(objeto, camposExcluir);
+        return generarPDF(nombrePlantilla, datos);
     }
 }

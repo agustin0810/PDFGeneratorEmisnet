@@ -1,7 +1,13 @@
 <!-- Fragmento para incluir estilos base comunes -->
 <style th:fragment="base-styles">
-    /* Estilos base para todas las plantillas PDF - BMV */
+    /* ========================================
+       SISTEMA DE ESTILOS ESCALABLE - BMV
+       Diseñado para 200+ reportes
+       ======================================== */
 
+    /* ========================================
+       1. RESET Y CONFIGURACIÓN BASE
+       ======================================== */
     * {
         margin: 0;
         padding: 0;
@@ -10,26 +16,106 @@
 
     body {
         font-family: Arial, sans-serif;
-        background-color: #F8F9FA;
-        color: #1D4167;
+        background-color: var(--color-neutral-03);
+        color: var(--color-primary);
         line-height: 1.4;
         margin: 0;
-        padding: 15px;
-        font-size: 8px;
+        padding: var(--spacing-base);
+        font-size: var(--font-size-base);
     }
+
+    /* Asegurar que todos los elementos de texto usen la paleta de colores */
+    p, div, span, td, th, li, label, input, textarea, select {
+        color: inherit;
+    }
+
+    /* Forzar colores en elementos específicos */
+    body * {
+        color: var(--color-primary) !important;
+    }
+
+    /* Excepciones para elementos que deben mantener sus colores específicos */
+    .text-primary { color: #1D4167 !important; }
+    .text-secondary { color: #4A6785 !important; }
+    .text-success { color: #28a745 !important; }
+    .text-warning { color: #ffc107 !important; }
+    .text-danger { color: #dc3545 !important; }
+    .text-info { color: #17a2b8 !important; }
+    .text-accent { color: #173452 !important; }
 
     .container {
         max-width: 100%;
         margin: 0 auto;
     }
 
-    /* Header - Solo logo */
+    /* ========================================
+       2. PALETA DE COLORES SISTEMÁTICA
+       ======================================== */
+    
+    /* Colores principales */
+    :root {
+        --color-primary: #1D4167;
+        --color-primary-light: #345476;
+        --color-primary-dark: #1A3A5D;
+        --color-secondary: #4A6785;
+        --color-accent: #173452;
+        
+        /* Neutros */
+        --color-neutral-03: #F8F9FA;
+        --color-neutral-06: #F1F4F6;
+        --color-neutral-09: #EBEEF1;
+        --color-neutral-12: #E4E8ED;
+        --color-neutral-20: #D2D9E1;
+        --color-neutral-30: #BBC6D1;
+        --color-neutral-40: #A5B3C2;
+        --color-neutral-50: #8EA0B3;
+        --color-neutral-60: #778DA4;
+        --color-neutral-70: #617A95;
+        --color-neutral-80: #4A6785;
+        --color-neutral-90: #345476;
+        --color-neutral-100: #1D4167;
+        
+        /* Estados */
+        --color-success: #28a745;
+        --color-warning: #ffc107;
+        --color-danger: #dc3545;
+        --color-info: #17a2b8;
+        
+        /* Tipografía */
+        --font-size-xs: 8px;
+        --font-size-sm: 10px;
+        --font-size-base: 12px;
+        --font-size-md: 14px;
+        --font-size-lg: 16px;
+        --font-size-xl: 18px;
+        --font-size-2xl: 20px;
+        --font-size-3xl: 24px;
+        
+        /* Espaciado */
+        --spacing-xs: 4px;
+        --spacing-sm: 8px;
+        --spacing-md: 12px;
+        --spacing-base: 15px;
+        --spacing-lg: 20px;
+        --spacing-xl: 30px;
+        
+        /* Bordes */
+        --border-radius-sm: 4px;
+        --border-radius-md: 6px;
+        --border-radius-lg: 8px;
+    }
+
+    /* ========================================
+       3. COMPONENTES BASE REUTILIZABLES
+       ======================================== */
+
+    /* Header */
     .header {
         background: white;
-        border-radius: 6px;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #E4E8ED;
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-sm);
+        margin-bottom: var(--spacing-base);
+        border: 1px solid var(--color-neutral-12);
         text-align: center;
     }
 
@@ -45,276 +131,290 @@
         max-height: 60px;
     }
 
-    /* Main content */
+    /* Cards */
     .content-card {
         background: white;
-        border-radius: 6px;
-        padding: 15px;
-        margin-bottom: 15px;
-        border: 1px solid #E4E8ED;
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-base);
+        margin-bottom: var(--spacing-base);
+        border: 1px solid var(--color-neutral-12);
     }
 
     .card-title {
         color: #173452;
-        font-size: 12px;
+        font-size: var(--font-size-md);
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-bottom: var(--spacing-sm);
         padding-bottom: 5px;
-        border-bottom: 2px solid #D2D9E1;
+        border-bottom: 2px solid var(--color-neutral-20);
     }
 
-    /* Estilos de tabla genéricos */
-    .data-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        border: 1px solid #E4E8ED;
-        font-size: 16px;
-        table-layout: fixed;
-        min-width: auto;
-        max-width: none;
+    .card-title-large {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--spacing-base);
     }
 
-    .data-table th {
-        background-color: #1D4167;
-        color: white;
-        padding: 1px 0px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0px;
-        border: 1px solid #E4E8ED;
-        word-wrap: break-word;
-    }
-
-    .data-table td {
-        padding: 0px 0px;
-        border: 1px solid #E4E8ED;
-        background: white;
-        text-align: center;
-        font-size: 16px;
-        word-wrap: break-word;
-    }
-
-    .data-table tr:nth-child(even) td {
-        background-color: #F8F9FA;
-    }
-
-    /* Estilos específicos para tablas de posiciones */
-    .posiciones-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        border: 1px solid #E4E8ED;
-        font-size: 16px;
-        table-layout: fixed;
-        min-width: auto;
-        max-width: none;
-    }
-
-    .posiciones-table th {
-        background-color: #1D4167;
-        color: white;
-        padding: 1px 0px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0px;
-        border: 1px solid #E4E8ED;
-        word-wrap: break-word;
-    }
-
-    .posiciones-table td {
-        padding: 0px 0px;
-        border: 1px solid #E4E8ED;
-        background: white;
-        text-align: center;
-        font-size: 16px;
-        word-wrap: break-word;
-    }
-
-    .posiciones-table tr:nth-child(even) td {
-        background-color: #F8F9FA;
-    }
-
-    .emisor-cell {
-        text-align: left;
-        font-weight: 600;
+    /* Document title */
+    .document-title {
         color: #173452;
-        font-size: 16px;
-        padding: 0px 0px;
+        font-size: var(--font-size-3xl);
+        font-weight: bold;
+        margin-bottom: var(--spacing-base);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
-    .serie-cell {
+    /* ========================================
+       4. SISTEMA DE TABLAS ESCALABLE
+       ======================================== */
+
+    /* Tabla base */
+    .table-base {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-sm);
+        table-layout: fixed;
+    }
+
+    .table-base th,
+    .table-base td {
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    /* Forzar bordes en todas las tablas */
+    table {
+        border-collapse: collapse !important;
+        border: 2px solid var(--color-neutral-12) !important;
+    }
+
+    table th,
+    table td {
+        border: 1px solid var(--color-neutral-12) !important;
+    }
+
+    /* Headers de tabla */
+    .table-header-main {
+        background-color: var(--color-primary);
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        border-bottom: 2px solid var(--color-primary-light);
+        padding: 8px 4px;
+        font-size: var(--font-size-sm);
+    }
+
+    .table-header-sub {
+        background-color: var(--color-secondary);
+        color: white;
+        font-weight: 600;
+        text-align: center;
+        border-bottom: 1px solid var(--color-primary-light);
+        padding: 6px 4px;
+        font-size: var(--font-size-xs);
+    }
+
+    .table-header-simple {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 6px 4px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        border: 1px solid var(--color-neutral-12);
+    }
+
+    /* Forzar estilos en todos los headers de tabla */
+    table th {
+        background-color: var(--color-primary) !important;
+        color: white !important;
+        padding: 6px 4px !important;
+        text-align: center !important;
+        font-weight: 600 !important;
+        font-size: var(--font-size-xs) !important;
+        border: 1px solid var(--color-neutral-12) !important;
+    }
+
+    /* Celdas de tabla */
+    .table-cell-base {
+        padding: 4px 3px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: center;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Forzar estilos en todas las celdas de tabla */
+    table td {
+        padding: 4px 3px !important;
+        border: 1px solid var(--color-neutral-12) !important;
+        background: white !important;
+        text-align: center !important;
+        font-size: var(--font-size-xs) !important;
+        color: var(--color-primary) !important;
+        word-wrap: break-word !important;
+    }
+
+    .table-cell-left {
         text-align: left;
-        color: #4A6785;
-        font-size: 16px;
-        padding: 0px 0px;
     }
 
-    .number-cell {
+    .table-cell-right {
         text-align: right;
+    }
+
+    .table-cell-center {
+        text-align: center;
+    }
+
+    .table-cell-mono {
         font-family: 'Courier New', monospace;
         font-weight: 500;
-        font-size: 16px;
-        padding: 0px 0px;
+        color: var(--color-primary);
     }
 
-    .total-cell {
-        background-color: #F1F4F6 !important;
+    .table-cell-total {
+        background-color: var(--color-neutral-06) !important;
         font-weight: 600;
-        color: #173452;
+        color: var(--color-accent);
     }
 
-    /* Estilos de texto */
-    .text-left {
-        text-align: left;
+    .table-cell-highlight {
+        background-color: var(--color-neutral-03) !important;
+        color: var(--color-primary);
     }
 
-    .text-right {
-        text-align: right;
+    /* Filas alternadas */
+    .table-row-even td {
+        background-color: var(--color-neutral-03);
+        color: var(--color-primary);
     }
 
-    .text-center {
-        text-align: center;
+    /* ========================================
+       5. SISTEMA DE ANCHOS DE COLUMNA
+       ======================================== */
+
+    /* Anchos predefinidos */
+    .col-width-xs { width: 4% !important; max-width: 4% !important; }
+    .col-width-sm { width: 6% !important; max-width: 6% !important; }
+    .col-width-md { width: 8% !important; max-width: 8% !important; }
+    .col-width-lg { width: 10% !important; max-width: 10% !important; }
+    .col-width-xl { width: 12% !important; max-width: 12% !important; }
+    .col-width-2xl { width: 15% !important; max-width: 15% !important; }
+    .col-width-3xl { width: 18% !important; max-width: 18% !important; }
+    .col-width-4xl { width: 20% !important; max-width: 20% !important; }
+    .col-width-5xl { width: 25% !important; max-width: 25% !important; }
+    .col-width-6xl { width: 30% !important; max-width: 30% !important; }
+    .col-width-7xl { width: 35% !important; max-width: 35% !important; }
+    .col-width-8xl { width: 40% !important; max-width: 40% !important; }
+    .col-width-9xl { width: 45% !important; max-width: 45% !important; }
+    .col-width-full { width: 100% !important; max-width: 100% !important; }
+
+    /* ========================================
+       6. SISTEMA DE TIPOGRAFÍA
+       ======================================== */
+
+    /* Links */
+    a {
+        color: var(--color-primary);
+        text-decoration: none;
     }
 
-    .font-bold {
-        font-weight: 600;
+    a:hover {
+        color: var(--color-primary-dark);
+        text-decoration: underline;
     }
 
-    .font-mono {
-        font-family: 'Courier New', monospace;
+    a:visited {
+        color: var(--color-secondary);
     }
+
+    .text-xs { font-size: var(--font-size-xs); }
+    .text-sm { font-size: var(--font-size-sm); }
+    .text-base { font-size: var(--font-size-base); }
+    .text-md { font-size: var(--font-size-md); }
+    .text-lg { font-size: var(--font-size-lg); }
+    .text-xl { font-size: var(--font-size-xl); }
+    .text-2xl { font-size: var(--font-size-2xl); }
+    .text-3xl { font-size: var(--font-size-3xl); }
+
+    .font-light { font-weight: 300; }
+    .font-normal { font-weight: 400; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+
+    .text-left { text-align: left; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+
+    .font-mono { font-family: 'Courier New', monospace; }
 
     /* Colores de texto */
-    .text-primary {
-        color: #173452;
-    }
+    .text-primary { color: #1D4167; }
+    .text-secondary { color: #4A6785; }
+    .text-accent { color: #173452; }
+    .text-success { color: #28a745; }
+    .text-warning { color: #ffc107; }
+    .text-danger { color: #dc3545; }
+    .text-info { color: #17a2b8; }
 
-    .text-secondary {
-        color: #4A6785;
-    }
+    /* ========================================
+       7. SISTEMA DE ESPACIADO
+       ======================================== */
 
-    /* Estilos de totales */
-    .total-row {
-        background-color: #F1F4F6 !important;
-        font-weight: 600;
-        color: #173452;
-    }
+    .p-xs { padding: var(--spacing-xs); }
+    .p-sm { padding: var(--spacing-sm); }
+    .p-md { padding: var(--spacing-md); }
+    .p-lg { padding: var(--spacing-lg); }
+    .p-xl { padding: var(--spacing-xl); }
 
-    /* Agrupación de columnas */
-    .group-header {
-        background-color: #345476 !important;
-        color: white;
-        font-weight: 600;
-    }
+    .px-xs { padding-left: var(--spacing-xs); padding-right: var(--spacing-xs); }
+    .px-sm { padding-left: var(--spacing-sm); padding-right: var(--spacing-sm); }
+    .px-md { padding-left: var(--spacing-md); padding-right: var(--spacing-md); }
+    .px-lg { padding-left: var(--spacing-lg); padding-right: var(--spacing-lg); }
 
-    .sub-header {
-        background-color: #4A6785 !important;
-        color: white;
-        font-weight: 500;
-    }
+    .py-xs { padding-top: var(--spacing-xs); padding-bottom: var(--spacing-xs); }
+    .py-sm { padding-top: var(--spacing-sm); padding-bottom: var(--spacing-sm); }
+    .py-md { padding-top: var(--spacing-md); padding-bottom: var(--spacing-md); }
+    .py-lg { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
 
-    /* Contenedor de tablas */
-    .tables-container {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 5px;
-        margin-top: 15px;
-    }
+    .m-xs { margin: var(--spacing-xs); }
+    .m-sm { margin: var(--spacing-sm); }
+    .m-md { margin: var(--spacing-md); }
+    .m-lg { margin: var(--spacing-lg); }
+    .m-xl { margin: var(--spacing-xl); }
 
-    /* Estilos para avisos y confirmaciones */
-    .aviso-content {
-        padding: 20px;
-        line-height: 1.6;
-    }
+    .mb-xs { margin-bottom: var(--spacing-xs); }
+    .mb-sm { margin-bottom: var(--spacing-sm); }
+    .mb-md { margin-bottom: var(--spacing-md); }
+    .mb-lg { margin-bottom: var(--spacing-lg); }
 
-    .aviso-title {
-        color: #173452;
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 15px;
-        text-align: center;
-    }
+    /* ========================================
+       8. COMPONENTES ESPECIALIZADOS
+       ======================================== */
 
-    .aviso-text {
-        color: #1D4167;
-        font-size: 14px;
-        margin-bottom: 10px;
-        text-align: justify;
-    }
-
-    .aviso-highlight {
-        background-color: #F1F4F6;
-        padding: 10px;
-        border-left: 4px solid #1D4167;
-        margin: 15px 0;
-    }
-
-    .confirmacion-details {
-        background-color: #F8F9FA;
-        padding: 15px;
-        border-radius: 6px;
-        margin: 15px 0;
-    }
-
-    .confirmacion-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-
-    .confirmacion-label {
-        font-weight: 600;
-        color: #173452;
-    }
-
-    .confirmacion-value {
-        color: #4A6785;
-    }
-
-    /* Colores directos para compatibilidad con PDF */
-    .neutral-03 { background-color: #F8F9FA; }
-    .neutral-06 { background-color: #F1F4F6; }
-    .neutral-09 { background-color: #EBEEF1; }
-    .neutral-12 { background-color: #E4E8ED; }
-    .neutral-20 { background-color: #D2D9E1; }
-    .neutral-30 { background-color: #BBC6D1; }
-    .neutral-40 { background-color: #A5B3C2; }
-    .neutral-50 { background-color: #8EA0B3; }
-    .neutral-60 { background-color: #778DA4; }
-    .neutral-70 { background-color: #617A95; }
-    .neutral-80 { background-color: #4A6785; }
-    .neutral-90 { background-color: #345476; }
-    .neutral-100 { background-color: #1D4167; color: white; }
-    .neutral-110 { background-color: #1A3A5D; color: white; }
-    .neutral-120 { color: #173452; }
-    .neutral-130 { color: #142E48; }
-    .neutral-140 { color: #11273E; }
-    .neutral-150 { color: #0F2034; }
-
-    .texto-principal { color: #1D4167; }
-    .texto-secundario { color: #4A6785; }
-    .texto-claro { color: #778DA4; }
-    .borde-claro { border-color: #E4E8ED; }
-
-    /* Info grid */
+    /* Info Grid */
     .info-grid {
         width: 100%;
     }
 
     .info-item {
-        margin-bottom: 15px;
+        margin-bottom: var(--spacing-base);
         clear: both;
     }
 
     .info-label {
-        color: #4A6785;
-        font-size: 12px;
+        color: var(--color-secondary);
+        font-size: var(--font-size-xs);
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -323,275 +423,108 @@
     }
 
     .info-value {
-        color: #1D4167;
-        font-size: 14px;
+        color: var(--color-primary);
+        font-size: var(--font-size-sm);
         font-weight: 600;
-        padding: 8px 12px;
-        background-color: #F8F9FA;
-        border-radius: 4px;
-        border-left: 3px solid #1D4167;
+        padding: var(--spacing-sm) var(--spacing-md);
+        background-color: var(--color-neutral-03);
+        border-radius: var(--border-radius-sm);
+        border-left: 3px solid var(--color-primary);
         display: block;
     }
 
-    /* Action buttons */
-    .action-buttons {
+    /* Section Titles */
+    .section-title {
+        background-color: var(--color-neutral-06);
+        color: #1D4167;
+        font-weight: bold;
+        font-size: var(--font-size-sm);
         text-align: center;
-        margin-top: 30px;
+        padding: var(--spacing-sm);
+        margin: var(--spacing-sm) 0 5px 0;
+        border: 1px solid var(--color-neutral-12);
+        border-radius: var(--border-radius-sm);
     }
 
-    .btn {
-        padding: 10px 20px;
-        border: 1px solid #E4E8ED;
-        border-radius: 4px;
-        font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
-        display: inline-block;
-        margin: 0 10px;
-        min-width: 120px;
+    /* Table Container */
+    .table-container {
+        margin-bottom: var(--spacing-base);
+        page-break-inside: avoid;
+        text-align: center;
     }
 
-    .btn-secondary {
-        background-color: #f8f9fa;
-        color: #4A6785;
-        border-color: #E4E8ED;
-    }
+    /* ========================================
+       9. UTILIDADES ESPECÍFICAS PARA REPORTES
+       ======================================== */
 
-    .btn-primary {
-        background-color: #1D4167;
-        color: white;
-        border-color: #1D4167;
-    }
-
-    /* Info table */
-    .info-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    .info-table tr {
-        border: 2px solid #E4E8ED;
-    }
-
-    .info-table th {
-        background-color: #F8F9FA;
-        padding: 15px;
-        text-align: left;
-        font-weight: bold;
-        color: #173452;
-        font-size: 14px;
-        width: 40%;
-        border-right: 2px solid #E4E8ED;
-    }
-
-    .info-table td {
-        padding: 15px;
-        background-color: white;
-        color: #1D4167;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .info-text {
-        background-color: #F8F9FA;
-        padding: 15px;
-        border: 2px solid #E4E8ED;
-        border-radius: 4px;
-        color: #1D4167;
-        font-size: 14px;
-        min-height: 60px;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Footer */
-    .footer {
-        border-top: 2px solid #E4E8ED;
-        padding-top: 20px;
-        margin-top: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .footer-text {
-        color: #4A6785;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .page-number {
-        color: #4A6785;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    /* Estilos específicos para aviso de extemporaneidad */
-    .document-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #173452;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .document-date {
-        font-size: 16px;
-        color: #4A6785;
-        font-weight: 500;
-    }
-
-    .title-section {
-        margin-top: 15px;
-    }
-
-    /* Estilos específicos para reporte de posiciones */
+    /* Contenedor específico para tablas de posiciones */
     .table-section {
-        margin-bottom: 15px;
-    }
-
-    .table-section h3 {
-        color: #173452;
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 6px;
         text-align: center;
+        margin-bottom: var(--spacing-lg);
     }
 
-    /* Anchos específicos para columnas de posiciones */
-    .posiciones-table th:nth-child(1), .posiciones-table td:nth-child(1) { 
-        width: 11px !important; 
-        max-width: 11px !important;
-    } /* Emisor */
-    .posiciones-table th:nth-child(2), .posiciones-table td:nth-child(2) { 
-        width: 4px !important; 
-        max-width: 4px !important;
-    } /* Serie */
-    .posiciones-table th:nth-child(3), .posiciones-table td:nth-child(3) { 
-        width: 3px !important; 
-        max-width: 3px !important;
-    } /* TV */
-    .posiciones-table th:nth-child(4), .posiciones-table td:nth-child(4) { 
-        width: 8px !important; 
-        max-width: 8px !important;
-    } /* Saldo Inicial */
-    .posiciones-table th:nth-child(5), .posiciones-table td:nth-child(5) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* VCP */
-    .posiciones-table th:nth-child(6), .posiciones-table td:nth-child(6) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* VCT */
-    .posiciones-table th:nth-child(7), .posiciones-table td:nth-child(7) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* CTO */
-    .posiciones-table th:nth-child(8), .posiciones-table td:nth-child(8) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* TOTAL */
-    .posiciones-table th:nth-child(9), .posiciones-table td:nth-child(9) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* VCP */
-    .posiciones-table th:nth-child(10), .posiciones-table td:nth-child(10) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* VCT */
-    .posiciones-table th:nth-child(11), .posiciones-table td:nth-child(11) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* CTO */
-    .posiciones-table th:nth-child(12), .posiciones-table td:nth-child(12) { 
-        width: 7px !important; 
-        max-width: 7px !important;
-    } /* TOTAL */
-
-    /* Forzar anchos mínimos para todas las columnas */
-    .posiciones-table th,
-    .posiciones-table td {
-        min-width: 0 !important;
-        max-width: none !important;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    /* Estilos específicos para confirmación de envío */
-    .header-info {
-        margin-top: 15px;
-        text-align: left;
-    }
-
-    .timestamp {
-        color: #4A6785;
-        font-size: 14px;
+    /* Celdas específicas */
+    .cell-emisora {
         font-weight: 500;
-        float: left;
+        color: var(--color-accent);
     }
 
-    .system-title {
-        color: #173452;
-        font-size: 16px;
-        font-weight: 600;
+    .cell-serie {
+        font-weight: 500;
+        color: var(--color-accent);
+    }
+
+    .cell-tv {
+        font-weight: 500;
+        color: var(--color-accent);
+    }
+
+    .cell-number {
         text-align: right;
-        float: right;
-        max-width: 300px;
-    }
-
-    .breadcrumb {
-        color: #1D4167;
-        font-size: 16px;
+        font-family: 'Courier New', monospace;
         font-weight: 500;
-        text-decoration: none;
-        clear: both;
-        display: block;
-        margin-top: 10px;
+        color: var(--color-primary);
     }
 
-    .breadcrumb::before {
-        content: "> ";
-        color: #4A6785;
-        font-weight: bold;
+    /* Celdas específicas para posiciones (compatibilidad) */
+    .emisora-cell {
+        font-weight: 500;
+        color: var(--color-accent);
     }
 
-    /* Ajustes específicos para plantillas con más padding */
-    .container-padded {
-        padding: 20px;
+    .serie-cell {
+        font-weight: 500;
+        color: var(--color-accent);
     }
 
-    .content-card-padded {
-        padding: 20px;
-        margin-bottom: 20px;
+    .tv-cell {
+        font-weight: 500;
+        color: var(--color-accent);
     }
 
-    .card-title-large {
-        font-size: 18px;
-        margin-bottom: 15px;
+    .number-cell {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: 500;
+        color: var(--color-primary);
     }
 
-    .info-label-small {
-        font-size: 12px;
+    .total-cell {
+        background-color: var(--color-neutral-06) !important;
+        font-weight: 600;
+        color: var(--color-accent);
     }
 
-    .info-value-medium {
-        font-size: 14px;
-    }
+    /* Estados de datos */
+    .status-success { color: var(--color-success); }
+    .status-warning { color: var(--color-warning); }
+    .status-danger { color: var(--color-danger); }
+    .status-info { color: var(--color-info); }
 
-    .info-text-medium {
-        font-size: 14px;
-    }
+    /* ========================================
+       10. ESTILOS DE IMPRESIÓN
+       ======================================== */
 
-    /* Ajustes para orientación landscape */
-    .container-landscape {
-        width: 100%;
-        overflow: hidden;
-    }
-
-    /* Print styles para orientación portrait */
     @media print {
         @page {
             size: A4;
@@ -600,7 +533,7 @@
 
         body {
             background: white;
-            font-size: 6px;
+            font-size: var(--font-size-xs);
             padding: 5px;
         }
 
@@ -628,7 +561,6 @@
         }
     }
 
-    /* Print styles para orientación landscape */
     @media print and (orientation: landscape) {
         @page {
             size: A4 landscape;
@@ -639,5 +571,265 @@
             width: 297mm;
             height: 210mm;
         }
+    }
+
+    /* ========================================
+       11. COMPATIBILIDAD CON ESTILOS EXISTENTES
+       ======================================== */
+
+    /* Mantener compatibilidad con estilos específicos existentes */
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border: 2px solid var(--color-neutral-12);
+        font-size: var(--font-size-sm);
+        table-layout: fixed;
+    }
+
+    .data-table th {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 4px 2px;
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-xs);
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        border: 1px solid var(--color-neutral-12);
+        word-wrap: break-word;
+    }
+
+    .data-table td {
+        padding: 4px 2px;
+        border: 1px solid var(--color-neutral-12);
+        background: white;
+        text-align: center;
+        font-size: var(--font-size-xs);
+        color: var(--color-primary);
+        word-wrap: break-word;
+    }
+
+    .data-table tr:nth-child(even) td {
+        background-color: var(--color-neutral-03);
+        color: var(--color-primary);
+    }
+
+    /* Estilos específicos para posiciones (mantener compatibilidad) */
+    .posiciones-table-1,
+    .posiciones-table-2,
+    .posiciones-table-3 {
+        width: 95%;
+        max-width: 95%;
+        border-collapse: collapse !important;
+        margin-top: var(--spacing-sm);
+        border: 2px solid var(--color-neutral-12) !important;
+        font-size: var(--font-size-xs);
+        table-layout: fixed;
+    }
+
+    .posiciones-table-1 th,
+    .posiciones-table-1 td,
+    .posiciones-table-2 th,
+    .posiciones-table-2 td,
+    .posiciones-table-3 th,
+    .posiciones-table-3 td {
+        min-width: 0 !important;
+        max-width: none !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 6px 4px !important;
+        font-size: 11px !important;
+        border: 1px solid var(--color-neutral-12) !important;
+        color: var(--color-primary) !important;
+    }
+
+    /* Headers específicos para posiciones */
+    .posiciones-table-1 .header-row-main th,
+    .posiciones-table-2 .header-row-main th,
+    .posiciones-table-3 .header-row-main th {
+        background-color: #1D4167 !important;
+        color: #FFFFFF !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        border-bottom: 2px solid #345476 !important;
+        padding: 8px 4px !important;
+        font-size: var(--font-size-sm) !important;
+        border: 1px solid #E4E8ED !important;
+    }
+
+    .posiciones-table-1 .header-row-sub th,
+    .posiciones-table-2 .header-row-sub th,
+    .posiciones-table-3 .header-row-sub th {
+        background-color: #4A6785 !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        border-bottom: 1px solid #345476 !important;
+        padding: 6px 4px !important;
+        font-size: var(--font-size-xs) !important;
+        border: 1px solid #E4E8ED !important;
+    }
+
+    /* Anchos específicos para posiciones (reducidos en 25%) */
+    .posiciones-table-1 th:nth-child(1), .posiciones-table-1 td:nth-child(1) { width: 8.25% !important; max-width: 8.25% !important; }
+    .posiciones-table-1 th:nth-child(2), .posiciones-table-1 td:nth-child(2) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(3), .posiciones-table-1 td:nth-child(3) { width: 4.5% !important; max-width: 4.5% !important; }
+    .posiciones-table-1 th:nth-child(4), .posiciones-table-1 td:nth-child(4) { width: 6.75% !important; max-width: 6.75% !important; }
+    .posiciones-table-1 th:nth-child(5), .posiciones-table-1 td:nth-child(5) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(6), .posiciones-table-1 td:nth-child(6) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(7), .posiciones-table-1 td:nth-child(7) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(8), .posiciones-table-1 td:nth-child(8) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(9), .posiciones-table-1 td:nth-child(9) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(10), .posiciones-table-1 td:nth-child(10) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-1 th:nth-child(11), .posiciones-table-1 td:nth-child(11) { width: 5.625% !important; max-width: 5.625% !important; }
+
+    .posiciones-table-2 th:nth-child(1), .posiciones-table-2 td:nth-child(1) { width: 8.25% !important; max-width: 8.25% !important; }
+    .posiciones-table-2 th:nth-child(2), .posiciones-table-2 td:nth-child(2) { width: 5.625% !important; max-width: 5.625% !important; }
+    .posiciones-table-2 th:nth-child(3), .posiciones-table-2 td:nth-child(3) { width: 4.5% !important; max-width: 4.5% !important; }
+    .posiciones-table-2 th:nth-child(4), .posiciones-table-2 td:nth-child(4) { width: 6.75% !important; max-width: 6.75% !important; }
+    .posiciones-table-2 th:nth-child(5), .posiciones-table-2 td:nth-child(5) { width: 6.25% !important; max-width: 6.25% !important; }
+    .posiciones-table-2 th:nth-child(6), .posiciones-table-2 td:nth-child(6) { width: 6.25% !important; max-width: 6.25% !important; }
+    .posiciones-table-2 th:nth-child(7), .posiciones-table-2 td:nth-child(7) { width: 6.25% !important; max-width: 6.25% !important; }
+    .posiciones-table-2 th:nth-child(8), .posiciones-table-2 td:nth-child(8) { width: 6.25% !important; max-width: 6.25% !important; }
+    .posiciones-table-2 th:nth-child(9), .posiciones-table-2 td:nth-child(9) { width: 6.25% !important; max-width: 6.25% !important; }
+    .posiciones-table-2 th:nth-child(10), .posiciones-table-2 td:nth-child(10) { width: 6.25% !important; max-width: 6.25% !important; }
+    .posiciones-table-2 th:nth-child(11), .posiciones-table-2 td:nth-child(11) { width: 6.25% !important; max-width: 6.25% !important; }
+
+    .posiciones-table-3 th:nth-child(1), .posiciones-table-3 td:nth-child(1) { width: 11.25% !important; max-width: 11.25% !important; }
+    .posiciones-table-3 th:nth-child(2), .posiciones-table-3 td:nth-child(2) { width: 8.25% !important; max-width: 8.25% !important; }
+    .posiciones-table-3 th:nth-child(3), .posiciones-table-3 td:nth-child(3) { width: 6.75% !important; max-width: 6.75% !important; }
+    .posiciones-table-3 th:nth-child(4), .posiciones-table-3 td:nth-child(4) { width: 8.25% !important; max-width: 8.25% !important; }
+    .posiciones-table-3 th:nth-child(5), .posiciones-table-3 td:nth-child(5) { width: 8.25% !important; max-width: 8.25% !important; }
+    .posiciones-table-3 th:nth-child(6), .posiciones-table-3 td:nth-child(6) { width: 8.25% !important; max-width: 8.25% !important; }
+    .posiciones-table-3 th:nth-child(7), .posiciones-table-3 td:nth-child(7) { width: 8.25% !important; max-width: 8.25% !important; }
+
+    /* ========================================
+       12. ESTILOS ESPECÍFICOS PARA PDF - BORDES FORZADOS
+       ======================================== */
+
+    /* Forzar bordes visibles en todas las tablas de posiciones para PDF */
+    .posiciones-table-1,
+    .posiciones-table-2,
+    .posiciones-table-3 {
+        width: 90% !important;
+        max-width: 90% !important;
+        border: 2px solid #E4E8ED !important;
+        border-collapse: collapse !important;
+        margin: 0 auto !important;
+        display: inline-block !important;
+    }
+
+    .posiciones-table-1 th,
+    .posiciones-table-1 td,
+    .posiciones-table-2 th,
+    .posiciones-table-2 td,
+    .posiciones-table-3 th,
+    .posiciones-table-3 td {
+        border: 1px solid #E4E8ED !important;
+        border-collapse: collapse !important;
+    }
+
+    /* Forzar colores de headers con máxima especificidad */
+    table.posiciones-table-1 .header-row-main th,
+    table.posiciones-table-2 .header-row-main th,
+    table.posiciones-table-3 .header-row-main th {
+        background-color: #1D4167 !important;
+        color: #FFFFFF !important;
+        font-weight: bold !important;
+    }
+
+    table.posiciones-table-1 .header-row-sub th,
+    table.posiciones-table-2 .header-row-sub th,
+    table.posiciones-table-3 .header-row-sub th {
+        background-color: #4A6785 !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+    }
+
+    /* Forzar colores de headers para todas las tablas */
+    table.data-table th,
+    table.info-table th {
+        background-color: #1D4167 !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+        border: 1px solid #E4E8ED !important;
+    }
+
+    /* Forzar colores de texto específicos */
+    .text-primary { color: #1D4167 !important; }
+    .text-secondary { color: #4A6785 !important; }
+    .text-accent { color: #173452 !important; }
+    .text-success { color: #28a745 !important; }
+    .text-warning { color: #ffc107 !important; }
+    .text-danger { color: #dc3545 !important; }
+    .text-info { color: #17a2b8 !important; }
+
+    /* Forzar colores de títulos */
+    .card-title { color: #173452 !important; }
+    .card-title-large { color: #173452 !important; }
+    .document-title { color: #173452 !important; }
+    .section-title { color: #1D4167 !important; }
+
+
+
+    /* Asegurar que los bordes sean visibles en impresión */
+    @media print {
+        .posiciones-table-1,
+        .posiciones-table-2,
+        .posiciones-table-3 {
+            width: 85% !important;
+            max-width: 85% !important;
+            border: 2px solid #000000 !important;
+            margin: 0 auto !important;
+            display: inline-block !important;
+        }
+
+        .posiciones-table-1 th,
+        .posiciones-table-1 td,
+        .posiciones-table-2 th,
+        .posiciones-table-2 td,
+        .posiciones-table-3 th,
+        .posiciones-table-3 td {
+            border: 1px solid #000000 !important;
+        }
+
+        /* Forzar colores de headers en impresión */
+        .posiciones-table-1 .header-row-main th,
+        .posiciones-table-2 .header-row-main th,
+        .posiciones-table-3 .header-row-main th {
+            background-color: #1D4167 !important;
+            color: #FFFFFF !important;
+        }
+
+        .posiciones-table-1 .header-row-sub th,
+        .posiciones-table-2 .header-row-sub th,
+        .posiciones-table-3 .header-row-sub th {
+            background-color: #4A6785 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Forzar colores de headers para todas las tablas en impresión */
+        .data-table th,
+        .info-table th {
+            background-color: #1D4167 !important;
+            color: #FFFFFF !important;
+        }
+
+        /* Forzar colores de texto en impresión */
+        .text-primary { color: #1D4167 !important; }
+        .text-secondary { color: #4A6785 !important; }
+        .text-accent { color: #173452 !important; }
+        .text-success { color: #28a745 !important; }
+        .text-warning { color: #ffc107 !important; }
+        .text-danger { color: #dc3545 !important; }
+        .text-info { color: #17a2b8 !important; }
+
+        /* Forzar colores de títulos en impresión */
+        .card-title { color: #173452 !important; }
+        .card-title-large { color: #173452 !important; }
+        .document-title { color: #173452 !important; }
+        .section-title { color: #1D4167 !important; }
     }
 </style>

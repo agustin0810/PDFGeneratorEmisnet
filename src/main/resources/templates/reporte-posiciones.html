@@ -31,43 +31,139 @@
             </div>
         </div>
 
-        <!-- Tablas de posiciones -->
+        <!-- Tablas de posiciones divididas en 3 partes -->
         <div th:each="grupo : ${gruposPosiciones}" class="table-section">
             <h3 th:text="${grupo.nombre}">Grupo</h3>
-            <table class="posiciones-table">
-                <thead>
-                    <tr>
-                        <th>EMISOR</th>
-                        <th>SERIE</th>
-                        <th>TV</th>
-                        <th>SALDO INICIAL</th>
-                        <th>VCP</th>
-                        <th>VCT</th>
-                        <th>CTO</th>
-                        <th>TOTAL</th>
-                        <th>VCP</th>
-                        <th>VCT</th>
-                        <th>CTO</th>
-                        <th>TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="posicion : ${grupo.posiciones}">
-                        <td class="emisor-cell" th:text="${posicion.emisor}">-</td>
-                        <td class="serie-cell" th:text="${posicion.serie}">-</td>
-                        <td class="number-cell" th:text="${posicion.tv}">-</td>
-                        <td class="number-cell" th:text="${posicion.saldoInicial}">-</td>
-                        <td class="number-cell" th:text="${posicion.vcp1}">-</td>
-                        <td class="number-cell" th:text="${posicion.vct1}">-</td>
-                        <td class="number-cell" th:text="${posicion.cto1}">-</td>
-                        <td class="number-cell total-cell" th:text="${posicion.total1}">-</td>
-                        <td class="number-cell" th:text="${posicion.vcp2}">-</td>
-                        <td class="number-cell" th:text="${posicion.vct2}">-</td>
-                        <td class="number-cell" th:text="${posicion.cto2}">-</td>
-                        <td class="number-cell total-cell" th:text="${posicion.total2}">-</td>
-                    </tr>
-                </tbody>
-            </table>
+            
+            <!-- Primera tabla: EMISIÓN + SALDO ANTERIOR + MONTO OPERADO -->
+            <div class="table-container">
+                <div class="section-title">EMISIÓN - SALDO ANTERIOR - MONTO OPERADO</div>
+                <table class="posiciones-table-1">
+                    <thead>
+                        <tr class="header-row-main">
+                            <th scope="colgroup" colspan="3">EMISIÓN</th>
+                            <th scope="colgroup" colspan="4">SALDO ANTERIOR</th>
+                            <th scope="colgroup" colspan="4">MONTO OPERADO</th>
+                        </tr>
+                        <tr class="header-row-sub">
+                            <th scope="col">EMISORA</th>
+                            <th scope="col">SERIE</th>
+                            <th scope="col">TV</th>
+                            <th scope="col">SALDO INICIAL</th>
+                            <th scope="col">VCP</th>
+                            <th scope="col">VCT</th>
+                            <th scope="col">CTO</th>
+                            <th scope="col">VCP</th>
+                            <th scope="col">VCT</th>
+                            <th scope="col">CTO</th>
+                            <th scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="posicion : ${grupo.posiciones}">
+                            <!-- EMISIÓN -->
+                            <td class="emisora-cell" th:text="${posicion.emisora}">-</td>
+                            <td class="serie-cell" th:text="${posicion.serie}">-</td>
+                            <td class="tv-cell" th:text="${posicion.tv}">-</td>
+                            
+                            <!-- SALDO ANTERIOR -->
+                            <td class="number-cell" th:text="${posicion.saldoInicial}">-</td>
+                            <td class="number-cell" th:text="${posicion.saldoAnteriorVcp}">-</td>
+                            <td class="number-cell" th:text="${posicion.saldoAnteriorVct}">-</td>
+                            <td class="number-cell" th:text="${posicion.saldoAnteriorCto}">-</td>
+                            
+                            <!-- MONTO OPERADO -->
+                            <td class="number-cell" th:text="${posicion.montoOperadoVcp}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoOperadoVct}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoOperadoCto}">-</td>
+                            <td class="number-cell total-cell" th:text="${posicion.montoOperadoTotal}">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Segunda tabla: EMISIÓN + MONTO CANCELADO + MONTO MODIFICADO -->
+            <div class="table-container">
+                <div class="section-title">EMISIÓN - MONTO CANCELADO - MONTO MODIFICADO</div>
+                <table class="posiciones-table-2">
+                    <thead>
+                        <tr class="header-row-main">
+                            <th scope="colgroup" colspan="3">EMISIÓN</th>
+                            <th scope="colgroup" colspan="4">MONTO CANCELADO</th>
+                            <th scope="colgroup" colspan="4">MONTO MODIFICADO</th>
+                        </tr>
+                        <tr class="header-row-sub">
+                            <th scope="col">EMISORA</th>
+                            <th scope="col">SERIE</th>
+                            <th scope="col">TV</th>
+                            <th scope="col">VCP</th>
+                            <th scope="col">VCT</th>
+                            <th scope="col">CTO</th>
+                            <th scope="col">TOTAL</th>
+                            <th scope="col">VCP</th>
+                            <th scope="col">VCT</th>
+                            <th scope="col">CTO</th>
+                            <th scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="posicion : ${grupo.posiciones}">
+                            <!-- EMISIÓN -->
+                            <td class="emisora-cell" th:text="${posicion.emisora}">-</td>
+                            <td class="serie-cell" th:text="${posicion.serie}">-</td>
+                            <td class="tv-cell" th:text="${posicion.tv}">-</td>
+                            
+                            <!-- MONTO CANCELADO -->
+                            <td class="number-cell" th:text="${posicion.montoCanceladoVcp}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoCanceladoVct}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoCanceladoCto}">-</td>
+                            <td class="number-cell total-cell" th:text="${posicion.montoCanceladoTotal}">-</td>
+                            
+                            <!-- MONTO MODIFICADO -->
+                            <td class="number-cell" th:text="${posicion.montoModificadoVcp}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoModificadoVct}">-</td>
+                            <td class="number-cell" th:text="${posicion.montoModificadoCto}">-</td>
+                            <td class="number-cell total-cell" th:text="${posicion.montoModificadoTotal}">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Tercera tabla: EMISIÓN + POSICIÓN -->
+            <div class="table-container">
+                <div class="section-title">EMISIÓN - POSICIÓN</div>
+                <table class="posiciones-table-3">
+                    <thead>
+                        <tr class="header-row-main">
+                            <th scope="colgroup" colspan="3">EMISIÓN</th>
+                            <th scope="colgroup" colspan="4">POSICIÓN</th>
+                        </tr>
+                        <tr class="header-row-sub">
+                            <th scope="col">EMISORA</th>
+                            <th scope="col">SERIE</th>
+                            <th scope="col">TV</th>
+                            <th scope="col">VCP</th>
+                            <th scope="col">VCT</th>
+                            <th scope="col">CTO</th>
+                            <th scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="posicion : ${grupo.posiciones}">
+                            <!-- EMISIÓN -->
+                            <td class="emisora-cell" th:text="${posicion.emisora}">-</td>
+                            <td class="serie-cell" th:text="${posicion.serie}">-</td>
+                            <td class="tv-cell" th:text="${posicion.tv}">-</td>
+                            
+                            <!-- POSICIÓN -->
+                            <td class="number-cell" th:text="${posicion.posicionVcp}">-</td>
+                            <td class="number-cell" th:text="${posicion.posicionVct}">-</td>
+                            <td class="number-cell" th:text="${posicion.posicionCto}">-</td>
+                            <td class="number-cell total-cell" th:text="${posicion.posicionTotal}">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Action buttons -->

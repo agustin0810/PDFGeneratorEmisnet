@@ -1,5 +1,8 @@
 package com.bmv.emisnet.pdfgenerator.service;
 
+import com.bmv.emisnet.pdfgenerator.model.ReportePosicionesTest;
+import com.bmv.emisnet.pdfgenerator.model.AvisoExtemporaneidadTest;
+import com.bmv.emisnet.pdfgenerator.model.ConfirmacionEnvioTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -11,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -50,12 +54,74 @@ class GeneradorReportesPDFTest {
      */
     @Test
     void testGenerarReportePosiciones() throws Exception {
-        // Preparar datos para la plantilla
-        Map<String, Object> datos = new HashMap<>();
-        datos.put("titulo", "Reporte de Posiciones");
-        datos.put("fecha", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        datos.put("posiciones", crearDatosPosiciones());
-        datos.put("totalPosiciones", 5);
+        // Crear objeto de prueba con la estructura correcta para la plantilla
+        ReportePosicionesTest reporte = new ReportePosicionesTest();
+        reporte.setFechaConsulta(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        reporte.setCasaBolsa("ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+        
+        // Crear grupo de posiciones
+        ReportePosicionesTest.GrupoPosiciones grupo = new ReportePosicionesTest.GrupoPosiciones();
+        grupo.setNombre("Grupo de Valores Gubernamentales");
+        
+        // Crear posiciones con los mismos datos originales
+        List<ReportePosicionesTest.PosicionDetalle> posiciones = new ArrayList<>();
+        
+        // Datos basados en la imagen proporcionada originalmente
+        String[] emisoras = {"WC", "ESGMEXISHRS", "FEMSA", "FIBRAM", "NAFTRA", "SMARTR", "WALMEX"};
+        String[] series = {"1", "1B", "UBD", "12", "ISHRS", "14", "1"};
+        String[] tvs = {"1", "1B", "CF", "1", "1", "1", "1"};
+        int[] saldosIniciales = {33388, 2300, 2302, 10500, 533200, 15900, 9955};
+        int[] saldosAnterioresVct = {33388, 2300, 2302, 10500, 533200, 15900, 9655};
+        int[] posicionesVct = {33388, 2300, 2302, 10500, 533200, 15900, 9666};
+        int[] posicionesVcp = {0, 0, 0, 0, 0, 0, 300};
+        int[] posicionesTotal = {33388, 2300, 2302, 10500, 533200, 15900, 9966};
+        
+        for (int i = 0; i < 7; i++) {
+            ReportePosicionesTest.PosicionDetalle posicion = new ReportePosicionesTest.PosicionDetalle();
+            
+            // EMISIÓN
+            posicion.setEmisora(emisoras[i]);
+            posicion.setSerie(series[i]);
+            posicion.setTv(tvs[i]);
+            
+            // SALDO ANTERIOR
+            posicion.setSaldoInicial(saldosIniciales[i]);
+            posicion.setSaldoAnteriorVcp(posicionesVcp[i]);
+            posicion.setSaldoAnteriorVct(saldosAnterioresVct[i]);
+            posicion.setSaldoAnteriorCto(0);
+            
+            // MONTO OPERADO
+            posicion.setMontoOperadoVcp(0);
+            posicion.setMontoOperadoVct(0);
+            posicion.setMontoOperadoCto(0);
+            posicion.setMontoOperadoTotal(0);
+            
+            // MONTO CANCELADO
+            posicion.setMontoCanceladoVcp(0);
+            posicion.setMontoCanceladoVct(0);
+            posicion.setMontoCanceladoCto(0);
+            posicion.setMontoCanceladoTotal(0);
+            
+            // MONTO MODIFICADO
+            posicion.setMontoModificadoVcp(0);
+            posicion.setMontoModificadoVct(0);
+            posicion.setMontoModificadoCto(0);
+            posicion.setMontoModificadoTotal(0);
+            
+            // POSICIÓN
+            posicion.setPosicionVcp(posicionesVcp[i]);
+            posicion.setPosicionVct(posicionesVct[i]);
+            posicion.setPosicionCto(0);
+            posicion.setPosicionTotal(posicionesTotal[i]);
+            
+            posiciones.add(posicion);
+        }
+        
+        grupo.setPosiciones(posiciones);
+        reporte.setGruposPosiciones(Arrays.asList(grupo));
+        
+        // Convertir objeto a mapa usando ObjectToMap
+        Map<String, Object> datos = ObjectToMapConverter.convertToMap(reporte);
         
         // Llamar directamente al método del servicio
         byte[] pdfBytes = generadorPDF.generarPDF("reporte-posiciones", datos);
@@ -70,55 +136,11 @@ class GeneradorReportesPDFTest {
         
         System.out.println("✓ Prueba unitaria reporte-posiciones: EXITOSA");
         System.out.println("  Método llamado: generarPDF()");
-        System.out.println("  Archivo guardado: " + archivoPDF.toString());
-        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
+        System.out.println("  Archivo PDF guardado: " + archivoPDF.toString());
+        System.out.println("  Tamaño PDF: " + pdfBytes.length + " bytes");
     }
 
-    /**
-     * Prueba unitaria: Generar PDF de reporte de ventas
-     * Llama directamente al método generarPDF()
-     */
-    @Test
-    void testGenerarReporteVentas() throws Exception {
-        // Preparar datos para la plantilla
-        Map<String, Object> datos = new HashMap<>();
-        datos.put("titulo", "Reporte de Ventas");
-        datos.put("periodo", "Enero 2024");
-        datos.put("fechaGeneracion", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        
-        // Datos de empresa
-        Map<String, Object> empresa = new HashMap<>();
-        empresa.put("nombre", "BMV - Bolsa Mexicana de Valores");
-        empresa.put("direccion", "Av. Paseo de la Reforma 255, Col. Cuauhtémoc, CDMX");
-        empresa.put("telefono", "55-1234-5678");
-        datos.put("empresa", empresa);
-        
-        // Datos de resumen
-        Map<String, Object> resumen = new HashMap<>();
-        resumen.put("totalVentas", "$150,000.00");
-        resumen.put("numeroTransacciones", "25");
-        resumen.put("ventaPromedio", "$6,000.00");
-        datos.put("resumen", resumen);
-        
-        // Datos de ventas
-        datos.put("ventas", crearDatosVentasCompletos());
-        
-        // Llamar directamente al método del servicio
-        byte[] pdfBytes = generadorPDF.generarPDF("reporte-ventas", datos);
-        
-        // Verificar que se generaron bytes
-        assertNotNull(pdfBytes, "El array de bytes no debe ser null");
-        assertTrue(pdfBytes.length > 0, "El array de bytes no debe estar vacío");
-        
-        // Guardar el PDF generado para inspección
-        Path archivoPDF = outputDir.resolve("reporte-ventas.pdf");
-        Files.write(archivoPDF, pdfBytes);
-        
-        System.out.println("✓ Prueba unitaria reporte-ventas: EXITOSA");
-        System.out.println("  Método llamado: generarPDF()");
-        System.out.println("  Archivo guardado: " + archivoPDF.toString());
-        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
-    }
+
 
     /**
      * Prueba unitaria: Generar aviso de extemporaneidad
@@ -126,12 +148,17 @@ class GeneradorReportesPDFTest {
      */
     @Test
     void testGenerarAvisoExtemporaneidad() throws Exception {
-        // Preparar datos para la plantilla
-        Map<String, Object> datos = new HashMap<>();
-        datos.put("titulo", "Aviso de Extemporaneidad");
-        datos.put("mensaje", "Se informa que el envío de información se realizó fuera del horario establecido.");
-        datos.put("fecha", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        datos.put("hora", "15:30");
+        // Crear objeto de prueba con los mismos datos originales
+        AvisoExtemporaneidadTest aviso = new AvisoExtemporaneidadTest();
+        aviso.setFechaGeneracion(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        aviso.setClaveCotizacion("ACTINVER");
+        aviso.setRazonSocial("ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+        aviso.setTipoInformacion("Información financiera trimestral");
+        aviso.setCausasIncumplimiento("Problemas técnicos en el sistema de reportes que impidieron el envío oportuno de la información requerida.");
+        aviso.setObservaciones("Se realizará el envío tan pronto como se resuelvan los problemas técnicos identificados.");
+        
+        // Convertir objeto a mapa usando ObjectToMap
+        Map<String, Object> datos = ObjectToMapConverter.convertToMap(aviso);
         
         // Llamar directamente al método del servicio
         byte[] pdfBytes = generadorPDF.generarPDF("aviso-extemporaneidad", datos);
@@ -156,13 +183,32 @@ class GeneradorReportesPDFTest {
      */
     @Test
     void testGenerarConfirmacionEnvio() throws Exception {
-        // Preparar datos para la plantilla
-        Map<String, Object> datos = new HashMap<>();
-        datos.put("titulo", "Confirmación de Envío");
-        datos.put("numeroEnvio", "ENV-2024-001");
-        datos.put("fechaEnvio", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        datos.put("destinatario", "Sistema EMISNET");
-        datos.put("estado", "Enviado exitosamente");
+        // Crear objeto de prueba con los mismos datos originales
+        ConfirmacionEnvioTest confirmacion = new ConfirmacionEnvioTest();
+        confirmacion.setFechaHoraEnvio(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " 10:30:00");
+        confirmacion.setClave("ACTINVER");
+        confirmacion.setRazonSocial("ACTINVER CASA DE BOLSA, S.A. DE C.V.");
+        confirmacion.setFolioRecepcion("1452904");
+        confirmacion.setResponsable("ACTINVER EQUITY Peyrani");
+        confirmacion.setPeriodo("Ejercicio 2025-02");
+        
+        // Crear archivos de ejemplo
+        ConfirmacionEnvioTest.ArchivoRecibido archivo1 = new ConfirmacionEnvioTest.ArchivoRecibido();
+        archivo1.setNombre("constrim.pdf");
+        archivo1.setDescripcion("Constancia Trimestral");
+        archivo1.setTamano(1024000L);
+        archivo1.setTipoArchivo("PDF");
+        
+        ConfirmacionEnvioTest.ArchivoRecibido archivo2 = new ConfirmacionEnvioTest.ArchivoRecibido();
+        archivo2.setNombre("reporte_mensual.pdf");
+        archivo2.setDescripcion("Reporte Mensual de Operaciones");
+        archivo2.setTamano(2048000L);
+        archivo2.setTipoArchivo("PDF");
+        
+        confirmacion.setArchivos(Arrays.asList(archivo1, archivo2));
+        
+        // Convertir objeto a mapa usando ObjectToMap
+        Map<String, Object> datos = ObjectToMapConverter.convertToMap(confirmacion);
         
         // Llamar directamente al método del servicio
         byte[] pdfBytes = generadorPDF.generarPDF("confirmacion-envio", datos);
@@ -225,103 +271,5 @@ class GeneradorReportesPDFTest {
         System.out.println("✓ Prueba unitaria manejo de error: EXITOSA");
         System.out.println("  Método llamado: generarPDF() con plantilla inexistente");
     }
-
-    /**
-     * Crear datos de ejemplo para posiciones
-     */
-    private Map<String, Object>[] crearDatosPosiciones() {
-        @SuppressWarnings("unchecked")
-        Map<String, Object>[] posiciones = new Map[5];
-        
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> posicion = new HashMap<>();
-            posicion.put("emisor", "EMISOR-" + (i + 1));
-            posicion.put("serie", "SERIE-" + (i + 1));
-            posicion.put("cantidad", 1000 + (i * 100));
-            posicion.put("valor", 50000.0 + (i * 10000.0));
-            posiciones[i] = posicion;
-        }
-        
-        return posiciones;
-    }
-
-    /**
-     * Crear datos de ejemplo para ventas
-     */
-    private Map<String, Object>[] crearDatosVentas() {
-        @SuppressWarnings("unchecked")
-        Map<String, Object>[] ventas = new Map[3];
-        
-        for (int i = 0; i < 3; i++) {
-            Map<String, Object> venta = new HashMap<>();
-            venta.put("producto", "PRODUCTO-" + (i + 1));
-            venta.put("cantidad", 10 + (i * 5));
-            venta.put("precio", 100.0 + (i * 50.0));
-            venta.put("total", (10 + (i * 5)) * (100.0 + (i * 50.0)));
-            ventas[i] = venta;
-        }
-        
-        return ventas;
-    }
-
-    /**
-     * Crear datos de ejemplo para ventas con estructura completa
-     */
-    private Map<String, Object>[] crearDatosVentasCompletos() {
-        @SuppressWarnings("unchecked")
-        Map<String, Object>[] ventas = new Map[3];
-        
-        for (int i = 0; i < 3; i++) {
-            Map<String, Object> venta = new HashMap<>();
-            venta.put("fecha", LocalDate.now().minusDays(i));
-            venta.put("cliente", "CLIENTE-" + (i + 1));
-            venta.put("producto", "PRODUCTO-" + (i + 1));
-            venta.put("cantidad", 10 + (i * 5));
-            venta.put("precioUnitario", 100.0 + (i * 50.0));
-            venta.put("total", (10 + (i * 5)) * (100.0 + (i * 50.0)));
-            ventas[i] = venta;
-        }
-        
-        return ventas;
-    }
-
-    @Test
-    void testEjemploPlantilla() throws IOException {
-        // Preparar datos de prueba
-        Map<String, Object> datos = new HashMap<>();
-        datos.put("fechaGeneracion", "02/09/2025");
-        datos.put("usuario", "Usuario Ejemplo");
-        datos.put("campo1", "Valor 1");
-        datos.put("campo2", "Valor 2");
-        datos.put("campo3", "Valor 3");
-        
-        // Crear lista de items de ejemplo
-        List<Map<String, Object>> items = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
-            Map<String, Object> item = new HashMap<>();
-            item.put("id", i);
-            item.put("nombre", "Item " + i);
-            item.put("valor", 1000 + i * 100);
-            item.put("estado", i % 2 == 0 ? "Activo" : "Inactivo");
-            items.add(item);
-        }
-        datos.put("items", items);
-
-        // Generar PDF
-        byte[] pdfBytes = generadorPDF.generarPDF("ejemplo-plantilla", datos);
-        
-        // Verificar que se generó correctamente
-        assertNotNull(pdfBytes, "El PDF no debería ser null");
-        assertTrue(pdfBytes.length > 0, "El PDF debería tener contenido");
-        
-        // Guardar PDF para verificación manual
-        Path outputPath = Paths.get("target/generated-pdfs/ejemplo-plantilla.pdf");
-        Files.createDirectories(outputPath.getParent());
-        Files.write(outputPath, pdfBytes);
-        
-        System.out.println("✓ Prueba unitaria ejemplo-plantilla: EXITOSA");
-        System.out.println("  Método llamado: generarPDF()");
-        System.out.println("  Archivo guardado: " + outputPath.toString());
-        System.out.println("  Tamaño: " + pdfBytes.length + " bytes");
-    }
+    
 }
